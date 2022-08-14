@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj": {}
+    "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj": {}
   },
   "projects": {
-    "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj": {
+    "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
+        "projectUniqueName": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
         "projectName": "Wildberries master bot",
-        "projectPath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
-        "packagesPath": "C:\\Users\\myspr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\obj\\",
+        "projectPath": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
+        "packagesPath": "C:\\Users\\Zorya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\myspr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Zorya\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "Telegram.Bot": {
               "target": "Package",
               "version": "[18.0.0, )"

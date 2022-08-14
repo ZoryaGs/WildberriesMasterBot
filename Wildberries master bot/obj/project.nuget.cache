@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1uKvTXDfZHHfPKIo+2Aw1c/deXlrxu5Z9Zqw4x1nASI7xfc3QqwZudCIRvM0NS8qdT+eZsFI1KXTWXpwwxUg+g==",
+  "dgSpecHash": "zlJ0kAsoi9pyebUcL3Me8dL94+o1vwZMH3jKo+EdWdBlVopnVMGc5Ny5KiQTmiwtBs6GP3xGV4XQoznHh2ELvQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
+  "projectFilePath": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\myspr\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
-    "C:\\Users\\myspr\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512"
+    "C:\\Users\\Zorya\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Zorya\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512"
   ],
   "logs": []
 }

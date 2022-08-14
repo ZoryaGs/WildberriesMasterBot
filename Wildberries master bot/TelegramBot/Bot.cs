@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -9,18 +10,32 @@ using Telegram.Bot.Types.ReplyMarkups;
 using System.Collections.Generic;
 
 
-namespace Wildberries_master_bot
+namespace Wildberries_master_bot.TelegramBot
 {
+
     internal class Bot
     {
+        public const int MaxMessageLenght = 2048; // tg limit is 4096
+
         public Dictionary<long, ClientData> botClients;
 
         public BotPage[] botPages;
 
-        public Bot(string token, BotPage[] botPages)
+        public bool showMessages = false;
+
+        public Bot(string token, BotPage[] botPages, string? clients = null)
         {
             ITelegramBotClient bot = new TelegramBotClient(token);
-            botClients = new Dictionary<long, ClientData>();
+
+            if (clients == null)
+            {
+                botClients = new Dictionary<long, ClientData>();
+            }
+            else
+            {
+                botClients = JsonConvert.DeserializeObject<Dictionary<long,ClientData>>(clients) ?? new Dictionary<long, ClientData>();
+                Console.WriteLine("Клиенты загружены успешно!");
+            }
 
             this.botPages = botPages;
 
@@ -47,13 +62,20 @@ namespace Wildberries_master_bot
                 if (message == null || msg == "null") return;
 
                 long senderId = message.Chat.Id;
-                Console.WriteLine(msg);
+
+                if (showMessages)
+                    Console.WriteLine($"{senderId}: {msg}");
 
                 await answer();
 
                 async Task answer()
                 {
                     (string text, IReplyMarkup? keys) result = MessageHander(msg, senderId).Result;
+
+                    if (result.text.Length > MaxMessageLenght)
+                    {
+                        result.text = result.text.Remove(MaxMessageLenght) + "...";
+                    }
 
                     await botClient.SendTextMessageAsync(message.Chat, result.text, replyMarkup: result.keys);
                 }
@@ -70,6 +92,10 @@ namespace Wildberries_master_bot
             switch (message)
             {
                 case "/start":
+                    if (botClients.ContainsKey(senderId))
+                    {
+                        return ("Ваш аккаунт уже зарегестрирован!", null);
+                    }
                     botClients.Add(senderId, new ClientData(-1));
                     return ("Введите Api64. (линк на документацию)", null);
                 default:
@@ -84,16 +110,17 @@ namespace Wildberries_master_bot
                             else
                             {
                                 data.apiKey = message;
+                                await WbHandler.ClientInit(data);
                                 return ("Апи успешно привязан, чтобы изменить api, используйте команду (команда)", null);
                             }
                         }
                         else
                         {
-                            if (data.loadedPage == -1)
+                            if (data.loadedPage == -1 || message.StartsWith("/"))
                             {
-                                for(int i = 0; i < botPages.Length; i++)
+                                for (int i = 0; i < botPages.Length; i++)
                                 {
-                                    if(message == botPages[i].PageCommand)
+                                    if (message == botPages[i].PageCommand)
                                     {
                                         data.loadedPage = i;
                                         return (botPages[i].PageMessage, PageButtons(i));
@@ -106,12 +133,13 @@ namespace Wildberries_master_bot
                                 {
                                     if (message == action.command)
                                     {
-                                        data.loadedPage = 0;
                                         try
                                         {
                                             return (action.action(data), null);
-                                        }catch(Exception e)
+                                        }
+                                        catch (Exception e)
                                         {
+                                            Console.WriteLine(e);
                                             return ("Слишком частые запросы", null);
                                         }
                                     }
@@ -125,7 +153,7 @@ namespace Wildberries_master_bot
                     }
                     break;
             }
-            return ("Упс, что-то пошло не так...", null);
+            return ("Неизвестная команда.", null);
         }
 
         public ReplyKeyboardMarkup PageButtons(int pageNum)
@@ -139,7 +167,7 @@ namespace Wildberries_master_bot
                 buttons[i] = new KeyboardButton(currentPage.Actions[i].command);
             }
 
-            return new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true};
+            return new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true };
         }
     }
 }

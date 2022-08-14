@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wildberries_master_bot
+namespace Wildberries_master_bot.TelegramBot
 {
     internal class BotPage
     {

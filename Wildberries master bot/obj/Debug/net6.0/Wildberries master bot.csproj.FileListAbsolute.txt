@@ -16,3 +16,21 @@ C:\Users\myspr\source\repos\Wildberries master bot\Wildberries master bot\obj\De
 C:\Users\myspr\source\repos\Wildberries master bot\Wildberries master bot\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\myspr\source\repos\Wildberries master bot\Wildberries master bot\bin\Debug\net6.0\Telegram.Bot.dll
 C:\Users\myspr\source\repos\Wildberries master bot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.csproj.CopyComplete
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Wildberries master bot.exe
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Wildberries master bot.deps.json
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Wildberries master bot.runtimeconfig.json
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Wildberries master bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Wildberries master bot.pdb
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\bin\Debug\net6.0\Telegram.Bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.csproj.AssemblyReference.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.AssemblyInfoInputs.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.AssemblyInfo.cs
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.csproj.CoreCompileInputs.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.csproj.CopyComplete
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\refint\Wildberries master bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.pdb
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\Wildberries master bot.genruntimeconfig.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wildberries master bot\obj\Debug\net6.0\ref\Wildberries master bot.dll
