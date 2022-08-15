@@ -79,19 +79,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Zorya\\.nuget\\packages\\": {}
+    "C:\\Users\\myspr\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
+      "projectUniqueName": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
       "projectName": "Wildberries master bot",
-      "projectPath": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
-      "packagesPath": "C:\\Users\\Zorya\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zorya\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\obj\\",
+      "projectPath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\Wildberries master bot.csproj",
+      "packagesPath": "C:\\Users\\myspr\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wildberries master bot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Zorya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\myspr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -141,7 +141,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }

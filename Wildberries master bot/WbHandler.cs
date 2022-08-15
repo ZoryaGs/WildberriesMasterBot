@@ -21,50 +21,55 @@ namespace Wildberries_master_bot
         private static DateTime currentDay => new DateTime(timeNow.Year, timeNow.Month, timeNow.Day);
         private static DateTime currentMounth => new DateTime(timeNow.Year, timeNow.Month, 1);
         private static DateTime lastDay => new DateTime(timeNow.Year, timeNow.Month, timeNow.Day).AddDays(-1);
-        private static DateTime lastMount => new DateTime(timeNow.Year, timeNow.Month, 1).AddMonths(-1);
+        private static DateTime lastMounth => new DateTime(timeNow.Year, timeNow.Month, 1).AddMonths(-1);
 
-        public static string IncomeToday(ClientData data) => request(data, data.incomeData, currentDay, "incomes", "Поставок за сегодня нет");
-        public static string IncomeMounth(ClientData data) => request(data, data.incomeData, currentMounth, "incomes", "Поставок за текущий месяц нет");
-        public static string IncomeLastToday(ClientData data) => request(data, data.incomeData, lastDay, "incomes", "Поставок за вчера нет");
-        public static string IncomeLastMounth(ClientData data) => request(data, data.incomeData, lastMount, "incomes", "Поставок за прошлый месяц нет");
+        public static string IncomeToday(ClientData data) => data.DataBase["/income"].GetContent(currentDay) ?? "Поставок за сегодня нет";
+        public static string IncomeMounth(ClientData data) => data.DataBase["/income"].GetContent(currentMounth) ?? "Поставок за текущий месяц нет";
+        public static string IncomeLastToday(ClientData data) => data.DataBase["/income"].GetContent(lastDay) ?? "Поставок за вчера нет";
+        public static string IncomeLastMounth(ClientData data) => data.DataBase["/income"].GetContent(lastMounth) ?? "Поставок за прошлый месяц нет";
 
-        public static string OrdersToday(ClientData data) => request(data, data.ordersData, currentDay, "orders", "Заказов за сегодня нет", "&flag=0");
-        public static string OrdersMounth(ClientData data) => request(data, data.ordersData, currentMounth, "orders", "Заказов за текущий месяц нет", "&flag=0");
-        public static string OrdersLastToday(ClientData data) => request(data, data.ordersData, lastDay, "orders", "Заказов за вчера нет", "&flag=0");
-        public static string OrdersLastMounth(ClientData data) => request(data, data.ordersData, lastMount, "orders", "Заказов за прошлый месяц нет", "&flag=0");
+        public static string OrdersToday(ClientData data) => data.DataBase["/orders"].GetContent(currentDay) ?? "Заказов за сегодня нет";
+        public static string OrdersMounth(ClientData data) => data.DataBase["/orders"].GetContent(currentMounth) ?? "Заказов за текущий месяц нет";
+        public static string OrdersLastToday(ClientData data) => data.DataBase["/orders"].GetContent(lastDay) ?? "Заказов за вчера нет";
+        public static string OrdersLastMounth(ClientData data) => data.DataBase["/orders"].GetContent(lastMounth) ?? "Заказов за прошлый месяц нет";
 
-        private static string AllIncome(ClientData data) => request(data, data.incomeData, new DateTime(2017, 1, 1, 0, 0, 0), "incomes", "");
-        private static string AllOrders(ClientData data) => request(data, data.ordersData, new DateTime(2017, 1, 1, 0, 0, 0), "orders", "", "&flag=0");
 
-        private static string request(ClientData client, IData data, DateTime dateTime, string req, string errText, string? addArg = null)
+        private static void update(string apiKey, IData data, string req, string? addArg = null)
         {
-            if (data.lastUpdate == DateTime.MinValue || timeNow.Subtract(data.lastUpdate).TotalMinutes > 10)
+            string url = $"{baseUrl}{req}?dateFrom={XmlConvert.ToString(data.lastMessage, XmlDateTimeSerializationMode.Utc)}{addArg}&key={apiKey}";
+            try
             {
-                string date = XmlConvert.ToString(data.lastMessage, XmlDateTimeSerializationMode.Utc);
-                string url = $"{baseUrl}{req}?dateFrom={date}{addArg}&key={client.apiKey}";
-                Console.WriteLine($"Update client {url}");
-                try
+                string answer = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream()).ReadToEnd();
+                data.Update(answer);
+            }
+            catch (WebException e)
+            {
+                if (e.Message == "The remote server returned an error: (400) Bad Request.")
                 {
-                    string answer = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream()).ReadToEnd();
-                    Console.WriteLine(answer);
-                    data.Update(answer);
+                    throw new WbException(WbException.ExceptionType.data_bad_request);
                 }
-                catch(WebException e)
+                else if (e.Message == "The remote server returned an error: (429) Too Many Requests.")
                 {
-                    Console.Write(e.GetBaseException().ge);
+                    throw new WbException(WbException.ExceptionType.data_too_many_request);
                 }
             }
-            return data.GetContent(dateTime) ?? errText;
         }
 
-        public static async Task ClientInit(ClientData data)
+        public static async Task ClientDataUpdateAsync(ClientData data)
         {
-            string income = AllIncome(data);
-            string orders = AllOrders(data);
-
-            if (income.Length == 0 || orders.Length == 0)
+            if (data.apiKey != null)
             {
-                Console.WriteLine($"Клиент не инициализирован! Ключ клиента: {data.apiKey}");
+                update(data.apiKey, data.DataBase["/income"], "incomes");
+                update(data.apiKey, data.DataBase["/orders"], "orders", "&flag=0");
+            }
+
+        }
+        public static void ClientDataUpdate(ClientData data)
+        {
+            if (data.apiKey != null)
+            {
+                update(data.apiKey, data.DataBase["/income"], "incomes");
+                update(data.apiKey, data.DataBase["/orders"], "orders", "&flag=0");
             }
         }
     }

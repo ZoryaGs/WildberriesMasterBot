@@ -8,19 +8,16 @@ namespace Wildberries_master_bot.TelegramBot
 {
     internal class BotPage
     {
-        public string PageCommand;
         public string PageMessage;
         public BotAction[] Actions = null;
 
-        public BotPage(string PageCommand, string PageMessage, BotAction[] Actions)
+        public BotPage(string PageMessage, BotAction[] Actions)
         {
-            this.PageCommand = PageCommand;
             this.PageMessage = PageMessage;
             this.Actions = Actions;
         }
-        public BotPage(string PageCommand, string PageMessage)
+        public BotPage(string PageMessage)
         {
-            this.PageCommand = PageCommand;
             this.PageMessage = PageMessage;
         }
     }

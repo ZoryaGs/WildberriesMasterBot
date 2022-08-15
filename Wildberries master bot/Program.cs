@@ -8,35 +8,42 @@ string botToken = "5543050011:AAHA7XVjqTiiiBB4xmixfZNQih1S0l19rLc";
 
 string clientsPath = "clients.txt";
 
-Bot bot = new Bot(botToken, new BotPage[]
+Bot bot = new Bot(botToken, new Dictionary<string, BotAction[][]>
 {
-    new BotPage("/income", "Выберите период")
-    {
-        Actions = new BotAction[]
-        {
+    {"/income", new BotAction[][]{
+        new BotAction[] {
             new BotAction("Сегодня", WbHandler.IncomeToday),
             new BotAction("Текущий месяц", WbHandler.IncomeMounth),
+        },
+        new BotAction[] {
             new BotAction("Вчера", WbHandler.IncomeLastToday),
             new BotAction("Прошлый месяц", WbHandler.IncomeLastMounth),
-        }
-    },
-    new BotPage("/orders", "Выберите период")
-    {
-        Actions = new BotAction[]
-        {
+        },
+        new BotAction[] {
+            new BotAction("Выписка за все время", null),
+        },
+    }},
+    {"/orders", new BotAction[][]{
+        new BotAction[] {
             new BotAction("Сегодня", WbHandler.OrdersToday),
             new BotAction("Текущий месяц", WbHandler.OrdersMounth),
+        },
+        new BotAction[] {
             new BotAction("Вчера", WbHandler.OrdersLastToday),
             new BotAction("Прошлый месяц", WbHandler.OrdersLastMounth),
-        }
-    }
+        },
+        new BotAction[] {
+            new BotAction("Выписка за все время", null),
+        },
+    }},
+
 }, GetClients());
 
 while (true)
 {
     string? cmd = Console.ReadLine();
 
-    if(cmd != null)
+    if (cmd != null)
     {
         switch (cmd)
         {
@@ -51,12 +58,13 @@ while (true)
                 Console.WriteLine("[T/F] - отоброжать/скрыть сообщения");
                 string? answ = Console.ReadLine();
 
-                if(answ != null)
+                if (answ != null)
                 {
-                    if(answ == "T")
+                    if (answ == "T")
                     {
                         bot.showMessages = true;
-                    }else if(answ == "F")
+                    }
+                    else if (answ == "F")
                     {
                         bot.showMessages = false;
                     }
@@ -64,11 +72,11 @@ while (true)
 
                 break;
             case "test":
-                WbHandler.IncomeLastToday(new ClientData(0) { apiKey = "ff" });
+                WbHandler.IncomeLastToday(new ClientData() { apiKey = "MDgyYjIxYzktODY3ZS00N2VkLTlmMGItZjIzZTNlODNlMmUw" });
                 break;
             case "/clear clients":
                 bot.botClients = new Dictionary<long, ClientData>();
-                if(File.Exists(clientsPath))
+                if (File.Exists(clientsPath))
                 {
                     File.Delete(clientsPath);
                     Console.WriteLine("Клиенты удалены успешно!");
