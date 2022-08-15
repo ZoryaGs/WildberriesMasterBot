@@ -118,7 +118,7 @@ namespace Wildberries_master_bot.TelegramBot
 
         public async Task MessageQueryHandler(ITelegramBotClient botClient,  CallbackQuery? query)
         {
-            if (query == null)
+            if (query == null || query.Data == null || query.Data == "~")
                 return;
 
             ClientData data = botClients[query.Message.Chat.Id];
@@ -130,8 +130,13 @@ namespace Wildberries_master_bot.TelegramBot
             int x = int.Parse(args[2]);
 
             var action = botPages[args[0]][y][x].action(data);
+            var markup = query.Message.ReplyMarkup;
+            markup.InlineKeyboard.ToArray()[y].ToArray()[x] = new InlineKeyboardButton(" ")
+            {
+                CallbackData = "~"
+            };
 
-            await botClient.EditMessageTextAsync(query.Message.Chat, query.Message.MessageId, action);
+            await botClient.EditMessageTextAsync(query.Message.Chat, query.Message.MessageId, action, replyMarkup: markup);
         }
 
         public async Task<(string, IReplyMarkup?)> MessageHander(ClientData? data, string message, long senderId)

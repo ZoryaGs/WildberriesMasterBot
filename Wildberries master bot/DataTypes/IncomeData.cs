@@ -66,8 +66,8 @@ namespace Wildberries_master_bot.DataTypes
                     }
 
                 }
-                return content.Length > 0 ? content : null;
 
+                return content.Length > 0 ? content : null;
             }
             return null;
         }

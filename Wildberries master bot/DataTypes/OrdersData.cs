@@ -51,9 +51,10 @@ namespace Wildberries_master_bot.DataTypes
 
                     if (dateTime > order.date)
                         break;
+
                     content += $"{order.odid}\n";
                 }
-                return content;
+                return content.Length > 0 ? content : null;
             }
 
             return null;
