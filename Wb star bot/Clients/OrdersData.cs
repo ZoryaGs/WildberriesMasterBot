@@ -67,8 +67,6 @@ namespace Wb_star_bot.Clients
                     content += $"🆔 Артикул WB: {order.nmId}\n";
                     content += $"📁 {order.category} | {order.techSize}\n";
                     content += $"{(order.isCancel ? "🚚" : "🚛")} Статус: {(order.isCancel ? "Возврат" : "В пути")}\n";
-                    content += $"Номер заказа (скоро удалю): {(order.odid)}\n";
-
                 }
 
                 return content.Length > 0 ? content : null;
@@ -111,7 +109,6 @@ namespace Wb_star_bot.Clients
                     content += $"🆔 Артикул WB: {order.nmId}\n";
                     content += $"📁 {order.category} | {order.techSize}\n";
                     content += $"{(order.isCancel ? "🚚" : "🚛")} Статус: {(order.isCancel ? "Возврат" : "В пути")}\n";
-                    content += $"Номер заказа (скоро удалю): {(order.odid)}\n";
 
                     using (var fs = new FileStream($"{outPut}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read)) {
                         foreach (long reciver in data.recivers) {

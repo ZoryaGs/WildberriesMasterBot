@@ -5,10 +5,14 @@
       "Microsoft.Win32.SystemEvents/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {}
+          "lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -23,10 +27,14 @@
       "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "System.Drawing.Common/6.0.0": {
@@ -35,10 +43,14 @@
           "Microsoft.Win32.SystemEvents": "6.0.0"
         },
         "compile": {
-          "lib/net6.0/System.Drawing.Common.dll": {}
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/net6.0/System.Drawing.Common.dll": {}
+          "lib/net6.0/System.Drawing.Common.dll": {
+            "related": ".xml"
+          }
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
@@ -60,10 +72,14 @@
           "Newtonsoft.Json": "12.0.2"
         },
         "compile": {
-          "lib/netcoreapp3.1/Telegram.Bot.dll": {}
+          "lib/netcoreapp3.1/Telegram.Bot.dll": {
+            "related": ".pdb;.xml"
+          }
         },
         "runtime": {
-          "lib/netcoreapp3.1/Telegram.Bot.dll": {}
+          "lib/netcoreapp3.1/Telegram.Bot.dll": {
+            "related": ".pdb;.xml"
+          }
         }
       }
     }
@@ -191,19 +207,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\myspr\\.nuget\\packages\\": {}
+    "C:\\Users\\Я\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\myspr\\source\\repos\\Wb star bot\\Wb star bot\\Wb star bot.csproj",
+      "projectUniqueName": "C:\\Users\\Я\\Documents\\GitHub\\WildberriesMasterBot\\Wb star bot\\Wb star bot.csproj",
       "projectName": "Wb star bot",
-      "projectPath": "C:\\Users\\myspr\\source\\repos\\Wb star bot\\Wb star bot\\Wb star bot.csproj",
-      "packagesPath": "C:\\Users\\myspr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\myspr\\source\\repos\\Wb star bot\\Wb star bot\\obj\\",
+      "projectPath": "C:\\Users\\Я\\Documents\\GitHub\\WildberriesMasterBot\\Wb star bot\\Wb star bot.csproj",
+      "packagesPath": "C:\\Users\\Я\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Я\\Documents\\GitHub\\WildberriesMasterBot\\Wb star bot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\myspr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Я\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -248,7 +264,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -257,7 +274,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.303\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

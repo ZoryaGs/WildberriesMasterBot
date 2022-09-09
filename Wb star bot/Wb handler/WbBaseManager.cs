@@ -10,6 +10,9 @@ using System.Xml;
 using Wb_star_bot.Telegram_Bot;
 using Wb_star_bot.Clients;
 using Newtonsoft.Json.Linq;
+using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
+using System.Collections;
 
 
 namespace Wb_star_bot.Wb_handler
@@ -67,6 +70,7 @@ namespace Wb_star_bot.Wb_handler
             }
             return content;
         }
+
         public static string GetSalesData(Bot bot, ClientData[]? client)
         {
             if (client == null) return "";
@@ -252,9 +256,40 @@ namespace Wb_star_bot.Wb_handler
             }
         }
 
-        public static string getCategoryItems(string category)
+        public static (string, InlineKeyboardMarkup?) GetProductPosition(Bot bot, ClientData[]? client, object? query)
         {
-            return new StreamReader(new HttpClient().GetAsync($"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest=-1029256,-102269,-1320234,-574667&emp=0&lang=ru&locale=ru&pricemarginCoeff=1.0&reg=1&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}").Result.Content.ReadAsStream()).ReadToEnd();
+            bot.clientBook[(long)query].messageCallback += GetProductPositionCallback;
+            return ("Введите артикул продукта и через пробел категорию поиска.", null);
+        }
+
+        public static void GetProductPositionCallback(Bot bot, ClientData[]? client, Message? message)
+        {
+            string[] mes = message.Text.Split(" ");
+            long id = long.Parse(mes[0]);
+
+            string category = "";
+            for (int i = 1; i < mes.Length; i++)
+            {
+                category += mes[i] + (i == mes.Length - 1 ? "" : " ");
+            }
+
+            bot.clientBook[message.Chat.Id].messageCallback = null;
+            bot.SendMessage(message.Chat.Id, getCategoryItems(category, id));
+        }
+
+        public static string getCategoryItems(string category, long nmId)
+        {
+            JObject data = JObject.Parse(new StreamReader(new HttpClient().GetAsync($"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest=-1029256,0,-10000000,-10000000&emp=0&lang=ru&locale=ru&pricemarginCoeff=1.0&reg=0&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}").Result.Content.ReadAsStream()).ReadToEnd());
+            int position = 1;
+
+            foreach(JObject obj in data.GetValue("data").Value<JObject>().GetValue("products").Values<JObject>())
+            {
+                if (nmId == obj.GetValue("id").Value<long>())
+                    return $"Позиция в поиске: {position}";
+
+                position++;
+            }
+            return "Позиция в поиске: >100";
         }
         public static async void ClientDataUpdating(object arg)
         {

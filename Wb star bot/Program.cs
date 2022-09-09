@@ -25,6 +25,9 @@ Bot bot = new Bot(token, new Dictionary<string, BotPage[]>
     {"/orders", new BotPage[]{
         new BotPage(0, WbBaseManager.GetOrdersData),
     }},
+    {"/search", new BotPage[]{
+        new BotPage(0, WbBaseManager.GetProductPosition),
+    }},
 });
 
 while (true)

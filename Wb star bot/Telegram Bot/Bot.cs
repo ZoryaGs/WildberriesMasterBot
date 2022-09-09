@@ -32,13 +32,13 @@ namespace Wb_star_bot.Telegram_Bot
 
         public static Dictionary<answer, string> answerList = new Dictionary<answer, string>()
         {
-            {answer.start, "Используйте команду /start"},
-            {answer.enter_api, "Введите апи"},
-            {answer.error_api, "Апи введено некорректно"},
+            {answer.start, "Используйте команду /start."},
+            {answer.enter_api, "Введите Api64. \n\n1️⃣ Зайдите в аккаунт Wilberries Partners.\n\n2️⃣ Перейдите в Профиль -> Настройки -> Доступ к API, или вольпользуйтесь [ссылкой](https://seller.wildberries.ru/login/ru?redirect_url=/supplier-settings/access-to-api).\n\n3️⃣ Отправьте ваш Api ключ для ведения статистики x64, без пробелов и прочих символов."},
+            {answer.error_api, "❌ Api64 ключ введен некорректно.\n\nПроверьте правильность ключа, возможно вы ввели не тот ключ или указали его не полностью.\n\nОтправьте правильный ключ заново в этом сообщении:"},
             {answer.acc_exists, "Вы уже зарегестрированны"},
             {answer.data_bad_request, "Не удалось привязать апи. Пороверьте апи, в противном случае перевыпустите новый апи ключ"},
             {answer.data_too_many_requests, "Сервисы Wildberries сейчас не доступны. Повторите попытку через пару минут."},
-            {answer.data_successfuly, "Апи успешно привязан!"},
+            {answer.data_successfuly, "✅ *Апи успешно привязан!*\n\nТеперь бот будет присылать статистику по Вашим заказам. Редактирование частоты и формата сообщений доступно в *Личном кабинете* в меню действий.\n\n⚠️ Если вы используете систему *FBS* или хотите расширить функционал бота, сгенерируйте уникальный Api ключ в WB Partners по [ссылке](https://seller.wildberries.ru/supplier-settings/access-to-new-api). И привяжите его к аккаунту в *Личном кабинете* или нажав на кнопку ниже."},
             {answer.data_failed, "Не удалось получить данные по введенному Api. Повторите попытку через пару минут."},
             {answer.data_already_has_reciver, "Апи уже привязан к этому аккаунту." },
 
@@ -88,7 +88,7 @@ namespace Wb_star_bot.Telegram_Bot
         {
             if (text.Length > MaxMessageLenght)
                 text = text.Remove(MaxMessageLenght);
-            await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup);
+            await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
         }
 
         public async Task SendMessage(long senderId, string text, FileStream stream, IReplyMarkup? markup = null)
