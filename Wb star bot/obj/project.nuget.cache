@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "J3Eu5dnsgI+p3oIb9xGUwZw7DKMecTlRZIhFayTbIOp4MUejW6OVbYMl4e2ZMHPtX6ERhmpm4BVnFtEDPmN3pg==",
+  "dgSpecHash": "qYTAYW9kH5iKgUO2Mf+xirK6Umr1pepEnDi8mz/MbtUistfZnpDnvxCfekxhsugbL6AQ7SahQXoyVfslVt/g2A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\myspr\\Documents\\GitHub\\WildberriesMasterBot\\Wb star bot\\Wb star bot.csproj",
+  "projectFilePath": "C:\\Users\\Тимур\\Documents\\GitHub\\WildberriesMasterBot\\Wb star bot\\Wb star bot.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\myspr\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "C:\\Users\\myspr\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\myspr\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
-    "C:\\Users\\myspr\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512"
+    "C:\\Users\\Тимур\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Тимур\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Тимур\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512",
+    "C:\\Users\\Тимур\\.nuget\\packages\\telegram.bot\\18.0.0\\telegram.bot.18.0.0.nupkg.sha512"
   ],
   "logs": []
 }

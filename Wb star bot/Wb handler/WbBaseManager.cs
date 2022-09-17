@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using System.Collections;
-
+using Telegram.Bot;
 
 namespace Wb_star_bot.Wb_handler
 {
@@ -127,9 +127,11 @@ namespace Wb_star_bot.Wb_handler
             return content.Length > 0 ? content : null;
         }
 
-        public static void update(string? apiKey, IData data, string req, string? addArg = null)
+        public static async Task update(string? apiKey, IData data, string req, string? addArg = null)
         {
-            string url = $"{baseUrl}{req}?dateFrom={XmlConvert.ToString(data.lastUpdate.AddHours(3), XmlDateTimeSerializationMode.Local)}{addArg}&key={apiKey}";
+            DateTime Msc = data.lastUpdate.AddHours(3);
+            string date = $"{Msc.Year}-{Msc.Month}-{Msc.Day}T{Msc.Hour}:{Msc.Minute}:{Msc.Second}";
+            string url = $"{baseUrl}{req}?dateFrom={date}{addArg}&key={apiKey}";
             Console.WriteLine(url);
             try
             {
@@ -258,11 +260,11 @@ namespace Wb_star_bot.Wb_handler
 
         public static (string, InlineKeyboardMarkup?) GetProductPosition(Bot bot, ClientData[]? client, object? query)
         {
-            bot.clientBook[(long)query].messageCallback += GetProductPositionCallback;
-            return ("Введите артикул продукта и через пробел категорию поиска.", null);
+            bot.clientBook[(long)query].messageCallback += (a,b,c)=> Task.Run(()=> GetProductPositionCallback(a,b,c));
+            return ("🔎 Введите артикул товара и поисковой запрос.\n\nПример: «_68507544 медицинский костюм_»", null);
         }
 
-        public static void GetProductPositionCallback(Bot bot, ClientData[]? client, Message? message)
+        public static async Task GetProductPositionCallback(Bot bot, ClientData[]? client, Message? message)
         {
             string[] mes = message.Text.Split(" ");
             long id = long.Parse(mes[0]);
@@ -274,22 +276,26 @@ namespace Wb_star_bot.Wb_handler
             }
 
             bot.clientBook[message.Chat.Id].messageCallback = null;
-            bot.SendMessage(message.Chat.Id, getCategoryItems(category, id));
+            await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryItems(category, id));
         }
 
         public static string getCategoryItems(string category, long nmId)
         {
-            JObject data = JObject.Parse(new StreamReader(new HttpClient().GetAsync($"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest=-1029256,0,-10000000,-10000000&emp=0&lang=ru&locale=ru&pricemarginCoeff=1.0&reg=0&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}").Result.Content.ReadAsStream()).ReadToEnd());
             int position = 1;
 
-            foreach(JObject obj in data.GetValue("data").Value<JObject>().GetValue("products").Values<JObject>())
-            {
-                if (nmId == obj.GetValue("id").Value<long>())
-                    return $"Позиция в поиске: {position}";
+            for (int page = 0; page < 100; page++) {
+                JObject data = JObject.Parse(new StreamReader(new HttpClient().GetAsync($"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest=-1029256,0,-10000000,-10000000&emp=0&lang=ru&locale=ru&page={page+1}&pricemarginCoeff=1.0&reg=0&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}").Result.Content.ReadAsStream()).ReadToEnd());
+                foreach (JObject obj in data.GetValue("data").Value<JObject>().GetValue("products").Values<JObject>())
+                {
+                    if (nmId == obj.GetValue("id").Value<long>())
+                    {
+                        return $"👀 Позиция товара в поиске: {page + 1} страница, {position - page * 100} карточка.";
+                    }
 
-                position++;
+                    position++;
+                }
             }
-            return "Позиция в поиске: >100";
+            return "😢 Ваш товар не ранжируется на первых 100 страницах.";
         }
         public static async void ClientDataUpdating(object arg)
         {
@@ -309,10 +315,10 @@ namespace Wb_star_bot.Wb_handler
                     {
                         DateTime lst = data.ordersData.lastMessage;
 
-                        update(data.apiKey, data.incomeData, "incomes");
-                        update(data.apiKey, data.stocksData, "stocks");
-                        update(data.apiKey, data.salesData, "sales", "&flag=0");
-                        update(data.apiKey, data.ordersData, "orders", "&flag=0");
+                        await update(data.apiKey, data.incomeData, "incomes");
+                        await update(data.apiKey, data.stocksData, "stocks");
+                        await update(data.apiKey, data.salesData, "sales", "&flag=0");
+                        await update(data.apiKey, data.ordersData, "orders", "&flag=0");
 
                         await data.ordersData.sendNewOrders(args.Item1, data, lst);
                     }
