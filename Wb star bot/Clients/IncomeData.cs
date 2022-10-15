@@ -25,7 +25,7 @@ namespace Wb_star_bot.Clients
 
         public Dictionary<int, List<Income>> incomes = new Dictionary<int, List<Income>>();
 
-        public void Update(string content)
+        public void Update(string content, ClientData parentData)
         {
             lastUpdate = DateTime.UtcNow;
 

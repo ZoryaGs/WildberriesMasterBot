@@ -17,7 +17,7 @@ namespace Wb_star_bot.Clients
 
         public Dictionary<long, Sale> sales = new Dictionary<long, Sale>();
 
-        public void Update(string content)
+        public void Update(string content, ClientData parentData)
         {
             lastUpdate = DateTime.UtcNow;
 

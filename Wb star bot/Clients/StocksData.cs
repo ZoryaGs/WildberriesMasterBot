@@ -16,7 +16,7 @@ namespace Wb_star_bot.Clients
 
         public Dictionary<int, List<Stock>> stocks = new Dictionary<int, List<Stock>>();
 
-        public void Update(string content)
+        public void Update(string content, onUpdate? onUpdate)
         {
             Stock[] ldStocks = JsonConvert.DeserializeObject<Stock[]>(content) ?? new Stock[0];
 
@@ -30,46 +30,16 @@ namespace Wb_star_bot.Clients
                 if (stocks.ContainsKey(stock.warehouse))
                 {
                     stocks[stock.warehouse].Add(stock);
+                    onUpdate?.Invoke(stock, true);
                 }
                 else
                 {
                     stocks.Add(stock.warehouse, new List<Stock>() { stock });
+                    onUpdate?.Invoke(stock, false);
                 }
             }
         }
-        public string? GetContent(DateTime startDate, DateTime? endDate = null)
-        {
-            if (stocks.Count > 0)
-            {
-                string content = "";
-                int wayToClient = 0;
-                int backFromClient = 0;
-                int quantitytNotInOrders = 0;
-
-                for (int i = 1; i <= stocks.Count; i++)
-                {
-                    List<Stock> stockList = stocks.ElementAt(^i).Value;
-                    Stock zeroElemet = stockList[0];
-
-                    content += $"Номер склада: {zeroElemet.warehouse}, место: {zeroElemet.warehouseName}\n";
-
-                    foreach (Stock stock in stockList)
-                    {
-                        quantitytNotInOrders += stock.quantityNotInOrders;
-                        backFromClient += stock.inWayFromClient;
-                        wayToClient += stock.inWayToClient;
-                    }
-                    content += $"📦 Остатки всего: {quantitytNotInOrders}\n";
-                    content += $"✈️ Заказы в пути: {wayToClient}\n";
-                    content += $"🚚 Возвраты в пути: {backFromClient}\n";
-
-                }
-                return content.Length > 0 ? content : null;
-            }
-
-            return null;
-        }
-
+      
         public class Stock
         {
             public DateTime lastChangeDate;
