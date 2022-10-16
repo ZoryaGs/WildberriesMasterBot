@@ -113,7 +113,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             DateTime Msc = data.lastUpdate;
             string date = $"{Msc.Year}-{Msc.Month}-{Msc.Day}T{Msc.Hour}:{Msc.Minute}:{Msc.Second}";
             string url = $"{baseUrl}{req}?dateFrom={date}{addArg}&key={apiKey}";
-            Console.WriteLine(url);
             try
             {
                 string answer = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream()).ReadToEnd();
@@ -312,7 +311,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                         {
                             foreach (JObject stock in stocks)
                             {
-                                //  Console.WriteLine(stock.GetValue("wh").Value<int>());
                                 count += stock.GetValue("qty").Value<int>();
                             }
                         }
@@ -541,9 +539,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             tm = tm.AddHours(-tm.Hour).AddMinutes(-tm.Minute).AddSeconds(-tm.Second);
 
             TimeSpan waitTime = tm.AddDays(1).Subtract(DateTime.UtcNow.AddHours(3));
-            Console.Write(waitTime);
             while (true)
             {
+                Console.WriteLine("Время до слуд. дневного оповещения: " + waitTime.ToString());
+
                 Thread.Sleep(waitTime);
                 waitTime = new TimeSpan(0, 1, 0, 0);
                 foreach (ClientData data in bot.clientDatas.Values)
@@ -557,7 +556,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                         async Task dailyMess(ClientData data)
                         {
-                            Console.WriteLine("DATA DAILY MESSAGE");
                             string content = $"❇️        Статистика за {DateTime.UtcNow.ToString("d")}        ❇️\n";
                             uint ordersCount = 0;
                             uint backCount = 0;

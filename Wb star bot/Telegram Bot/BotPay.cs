@@ -194,7 +194,6 @@ namespace Wb_star_bot.Telegram_Bot
                 return TarifSelectTable(bot, client, callbackQuery.Message.Chat.Id);
 
             }
-            Console.WriteLine(callbackQuery.Data);
             InlineKeyboardButton[][] buttons;
             switch (args[1])
             {

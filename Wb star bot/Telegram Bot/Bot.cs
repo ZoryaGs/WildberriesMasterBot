@@ -149,11 +149,15 @@ namespace Wb_star_bot.Telegram_Bot
         public async Task QueryHandler(CallbackQuery query)
         {
             long senderId = query.Message.Chat.Id;
+
+
+            if (!clientBook.ContainsKey(senderId))
+                return;
+
             ClientData[]? caller = GetClient(senderId);
 
             string[] cmds = query.Data.Split(' ');
             string cmd = cmds[0];
-
 
 
             if(cmd == "~" || cmds[cmds.Length-1] == "~")
