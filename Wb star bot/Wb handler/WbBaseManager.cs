@@ -450,7 +450,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 try
                 {
                     string addr = $"https://basket-0{basket}.wb.ru/vol";
-                    HttpContent client = new HttpClient().GetAsync($"{addr}{numId / 100000}/part{numId / 1000}/{numId}/info/ru/card").Result.Content;
+                    HttpContent client = new HttpClient().GetAsync($"{addr}{numId / 100000}/part{numId / 1000}/{numId}/info/ru/card.json").Result.Content;
                     JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
                     string token = data.GetValue("imt_name")?.Value<string>() ?? null;
                     File.Create($"{outPut}{numId}.txt").Close();
