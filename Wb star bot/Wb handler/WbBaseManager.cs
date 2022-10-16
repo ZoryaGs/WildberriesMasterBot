@@ -505,11 +505,11 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             content += $"{data.Smile} {data.Name}\n";
                             content += $"_{order.date}_\n\n";
                             content += $"🆔 ID товара: {order.nmId}\n";
-                            content += $"🏷 {order.brand} | {order.supplierArticle}\n";
+                            content += $"🏷 {order.brand} | {order.supplierArticle}\n\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
                             content += $"🌐 {order.warehouseName} → {order.oblast}\n";
                             if (!order.isCancel)
-                                content += $"💵 Выручка: {order.price}";
+                                content += $"💵 Выручка: {order.price}\n";
 
                             content += $"{(order.isCancel ? "🚚" : "🚛")} Статус: {(order.isCancel ? "Возврат" : "В пути")}\n";
                             content += $"\n📦 Остаток:{order.count} ";
@@ -561,44 +561,43 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                         async Task dailyMess(ClientData data)
                         {
-                            string content = $"❇️        Статистика за {DateTime.UtcNow.ToString("d")}        ❇️\n";
-                            uint ordersCount = 0;
-                            uint backCount = 0;
-                            int income = 0;
-                            Dictionary<ulong, List<OrdersData.Order>> ordersDictionary = new Dictionary<ulong, List<OrdersData.Order>>();
-                            SortedList<uint, int> endingOrders = new SortedList<uint, int>();
-
-                            foreach (uint odid in data.dailyOrders)
-                            {
-                                OrdersData.Order order = data.ordersData.orders[odid];
-
-                                if (!ordersDictionary.ContainsKey(odid))
-                                    ordersDictionary.Add(odid, new List<OrdersData.Order>());
-
-                                ordersDictionary[odid].Add(order);
-
-                                if (order.isCancel)
-                                {
-                                    income -= order.price;
-                                    backCount++;
-                                }
-                                else
-                                {
-                                    income += order.price;
-                                    ordersCount++;
-                                }
-
-                            }
-
-                            content += $"{data.Smile} {data.Name}\n\n";
-                            content += $"🚛 Заказы: {ordersCount}\n";
-                            content += $"🚚 Возвраты: {backCount}\n";
-                            content += $"💰 Выручка: {income}\n\n";
-
-
                             if (data.dailyOrders.Count > 0)
                             {
-                                content += "Ⓜ️ Наиболее популярные товары Ⓜ️\n";
+                                string content = $"❇️ *Статистика за {DateTime.UtcNow.ToString("d")}*\n";
+                                uint ordersCount = 0;
+                                uint backCount = 0;
+                                int income = 0;
+                                Dictionary<ulong, List<OrdersData.Order>> ordersDictionary = new Dictionary<ulong, List<OrdersData.Order>>();
+                                SortedList<uint, int> endingOrders = new SortedList<uint, int>();
+
+                                foreach (uint odid in data.dailyOrders)
+                                {
+                                    OrdersData.Order order = data.ordersData.orders[odid];
+
+                                    if (!ordersDictionary.ContainsKey(odid))
+                                        ordersDictionary.Add(odid, new List<OrdersData.Order>());
+
+                                    ordersDictionary[odid].Add(order);
+
+                                    if (order.isCancel)
+                                    {
+                                        income -= order.price;
+                                        backCount++;
+                                    }
+                                    else
+                                    {
+                                        income += order.price;
+                                        ordersCount++;
+                                    }
+
+                                }
+
+                                content += $"{data.Smile} {data.Name}\n\n";
+                                content += $"🚛 Заказы: {ordersCount}\n";
+                                content += $"🚚 Возвраты: {backCount}\n";
+                                content += $"💰 Выручка: {income}\n\n";
+
+                                content += "Ⓜ️ *Самые популярные товары:*\n";
 
                                 KeyValuePair<ulong, List<OrdersData.Order>>[] popular = ordersDictionary.OrderBy(x => x.Value.Count).Take(ordersDictionary.Count >= 2 ? 2 : ordersDictionary.Count).ToArray();
 
@@ -626,7 +625,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                 }
                                 KeyValuePair<ulong, List<OrdersData.Order>>[] ending = ordersDictionary.OrderBy(x => x.Value[0].count).Take(ordersDictionary.Count >= 2 ? 2 : ordersDictionary.Count).ToArray();
 
-                                content += "\n⚠️              Товары на исходе:              ⚠️\n";
+                                content += "\n⚠️ *Товары на исходе:*\n";
 
                                 foreach (KeyValuePair<ulong, List<OrdersData.Order>> end in ending)
                                 {
@@ -649,14 +648,17 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     content += $"💰 Выручка: {sm}\n\n";
                                 }
 
+                                content += $"_Дата последнего заказа: {data.ordersData.orders[data.dailyOrders[^1]].date}";
+
                                 data.dailyOrders.Clear();
+                                foreach (long id in data.recivers)
+                                {
+                                    Task<Message> mes = new Task<Message>(() => bot.SendMessage(id, content).Result);
+                                    mes.Start();
+                                    await bot.botClient.PinChatMessageAsync(id, mes.Result.MessageId);
+                                }
                             }
-                            foreach (long id in data.recivers)
-                            {
-                                Task<Message> mes = new Task<Message>(() => bot.SendMessage(id, content).Result);
-                                mes.Start();
-                                await bot.botClient.PinChatMessageAsync(id, mes.Result.MessageId);
-                            }
+
                         }
                     }
                     catch (Exception e)

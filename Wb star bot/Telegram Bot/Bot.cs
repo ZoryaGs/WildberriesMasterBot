@@ -90,7 +90,7 @@ namespace Wb_star_bot.Telegram_Bot
                 switch (update.Type)
                 {
                     case Telegram.Bot.Types.Enums.UpdateType.CallbackQuery:
-                        await QueryHandler(update.CallbackQuery);
+                        QueryHandler(update.CallbackQuery);
                         break;
                     case Telegram.Bot.Types.Enums.UpdateType.Message:
                         if (update.Message?.SuccessfulPayment != null)
@@ -110,14 +110,13 @@ namespace Wb_star_bot.Telegram_Bot
                                 snd.Start();
                                 clientBook[update.Message.Chat.Id].currentPage = snd.Result.MessageId;
                             }
-                        }
-                        else
+                        }else if(update.Message?.PinnedMessage == null)
                         {
-                            await MessageHandler(update.Message);
+                            MessageHandler(update.Message);
                         }
                         break;
                     case Telegram.Bot.Types.Enums.UpdateType.PreCheckoutQuery:
-                        await PreCheckoutHandler(update.PreCheckoutQuery);
+                        PreCheckoutHandler(update.PreCheckoutQuery);
                         break;
                 }
             }
