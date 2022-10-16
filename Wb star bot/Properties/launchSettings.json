@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Wb star bot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
