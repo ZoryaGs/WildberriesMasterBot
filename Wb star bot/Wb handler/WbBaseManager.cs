@@ -544,7 +544,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             Console.Write(waitTime);
             while (true)
             {
-                Thread.Sleep(3600000);
+                Thread.Sleep(waitTime);
                 waitTime = new TimeSpan(0, 1, 0, 0);
                 foreach (ClientData data in bot.clientDatas.Values)
                 {
