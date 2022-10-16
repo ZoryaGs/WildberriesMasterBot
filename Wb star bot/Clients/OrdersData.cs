@@ -26,32 +26,49 @@ namespace Wb_star_bot.Clients
         }
 
         public Dictionary<ulong, Order> orders = new Dictionary<ulong, Order>();
-        public Dictionary<int, Order> uniqOrders = new Dictionary<int, Order>();
+        public Dictionary<int, List<ulong>> uniqOrders = new Dictionary<int, List<ulong>>();
+
 
         public void Update(string content, onUpdate? onUpdate)
         {
-            lastUpdate = DateTime.UtcNow;
 
             Order[] newOrders = JsonConvert.DeserializeObject<Order[]>(content) ?? new Order[0];
-
             foreach (var order in newOrders)
             {
                 if (!orders.TryAdd(order.odid, order))
                 {
+                    if (orders[order.odid].isCancel != order.isCancel)
+                    {
+                        onUpdate?.Invoke(order, true);
+                    }
+
                     orders[order.odid] = order;
                 }
                 else
                 {
-                    onUpdate?.Invoke(this, false);
+                    if (uniqOrders.ContainsKey(order.nmId))
+                    {
+                        for (int i = uniqOrders[order.nmId].Count - 1; i >= 0; i--)
+                        {
+                            if (uniqOrders[order.nmId][i] < order.odid)
+                            {
+                                uniqOrders[order.nmId].Insert(i, order.odid);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        uniqOrders.Add(order.nmId, new List<ulong>() { order.odid });
+                    }
+
+                    onUpdate?.Invoke(order, false);
                 }
-                if (uniqOrders.ContainsKey(order.nmId))
-                {
-                    uniqOrders[order.nmId] = order;
-                }
-                else {
-                    uniqOrders.Add(order.nmId, order);
-                }
+
             }
+
+            if (newOrders.Length > 0)
+                lastUpdate = newOrders[^1].lastChangeDate;
         }
 
         public class Order
@@ -68,6 +85,7 @@ namespace Wb_star_bot.Clients
             public int incomeID;
             public ulong odid;
             public int nmId;
+            public string brand;
             public string subject;
             public string category;
             public bool isCancel;
@@ -75,6 +93,14 @@ namespace Wb_star_bot.Clients
 
             [NonSerialized]
             public int count;
+
+            public int price
+            {
+                get
+                {
+                    return (int)Math.Floor(totalPrice * (1f - discountPercent / 100f));
+                }
+            }
 
             public string itemName
             {
@@ -84,7 +110,7 @@ namespace Wb_star_bot.Clients
                     if (File.Exists(output)){
                         return File.ReadAllText(output);
                     }
-                    return "Без названия";
+                    return "_имя еще не получено_";
                 }
             }
         }

@@ -186,12 +186,13 @@ namespace Wb_star_bot.Telegram_Bot
 
                     if (curr.currentPage == null || curr.currentPage == query.Message.MessageId)
                     {
-                        (string, InlineKeyboardMarkup)? answ = curr.queryCallback?.Invoke(this, caller, query);
+                        (string, InlineKeyboardMarkup?)? answ = curr.queryCallback?.Invoke(this, caller, query);
 
-                        if (answ != null)
+                        if (answ != null && answ.Value.Item1 != null)
                         {
                             curr.currentPage = query.Message.MessageId;
                             await botClient.EditMessageTextAsync(query.Message.Chat, query.Message.MessageId, answ.Value.Item1, replyMarkup: answ.Value.Item2, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+
                             Console.WriteLine(query.Data);
                         }
                     }
@@ -502,11 +503,11 @@ namespace Wb_star_bot.Telegram_Bot
 
                 if (args[2] == "pay")
                 {
-                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", BotPay.getPayButtons("my", args[1], " ~"));
+                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", BotPay.getPayButtons("my", $" {args[1]} ~"));
                 }else if (args[2] == "p")
                 {
                     bot.clientBook[senderId].messageCallback = (a, b, c) => BotPay.ActivePromocode(a, new ClientData[] { currentClient() }, c);
-                    return ($"🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/my {args[1]} tarif" });
+                    return ($"🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/my back {args[1]}" });
                 }
                 else if (args[1] == "any")
                 {
@@ -581,6 +582,7 @@ namespace Wb_star_bot.Telegram_Bot
                 else if (args[1] != "back")
                 {
                     BotPay.SelectPrice(bot, new ClientData[] { client[int.Parse(args[2])] }, senderId, int.Parse(args[1]));
+                    return (null, null);
                 }
                 else
                 {

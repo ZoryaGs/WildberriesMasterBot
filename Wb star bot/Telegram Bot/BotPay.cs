@@ -23,12 +23,12 @@ namespace Wb_star_bot.Telegram_Bot
         public const string balanceLow = "❌ На вашем балансе недостаточно средств";
 
 
-        public static InlineKeyboardButton[][] getPayButtons(string page, string apiKey, string? endArg) => new InlineKeyboardButton[][] {
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("200 руб.") {CallbackData =  $"/{page} 200 {apiKey}{endArg}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("500 руб.") {CallbackData =  $"/{page} 500 {apiKey}{endArg}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("1000 руб.") {CallbackData =  $"/{page} 1000 {apiKey}{endArg}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Другая сумма") {CallbackData =  $"/{page} any {apiKey}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/{page} back {apiKey}", } }, };
+        public static InlineKeyboardButton[][] getPayButtons(string page, string? endArg) => new InlineKeyboardButton[][] {
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("200 руб.") {CallbackData =  $"/{page} 200{endArg}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("500 руб.") {CallbackData =  $"/{page} 500{endArg}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("1000 руб.") {CallbackData =  $"/{page} 1000{endArg}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Другая сумма") {CallbackData =  $"/{page} any", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/{page} back", } }, };
 
 
         public static (string, InlineKeyboardMarkup?) AccountPay(Bot bot, ClientData[]? client, object? query)
@@ -38,7 +38,7 @@ namespace Wb_star_bot.Telegram_Bot
             if (handleData.balance == 0)
             {
                 bot.clientBook[(long)query].queryCallback = (a,b,c) => AccountPaySelect(a,new ClientData[] { handleData },c);
-                return ($"❌ Данный аккаунт на текущий момент не активен.\n\nℹ️ Чтобы активировать аккаунт необходимо пополнить баланс и выбрать *подходящий тариф* или воспользоваться *промокодом*. Изменение тарифа всегда доступно в личном кабинете.\n\n💰 Текущий баланс: 0 руб.", payKeyboard(handleData.apiKey) ?? "");
+                return ($"❌ Данный аккаунт на текущий момент не активен.\n\nℹ️ Чтобы активировать аккаунт необходимо пополнить баланс и выбрать *подходящий тариф* или воспользоваться *промокодом*. Изменение тарифа всегда доступно в личном кабинете.\n\n💰 Текущий баланс: 0 руб.", payKeyboard() ?? "");
             }
 
             return TarifSelectTable(bot, client, query);
@@ -79,13 +79,13 @@ namespace Wb_star_bot.Telegram_Bot
 
         }
 
-        public static InlineKeyboardMarkup payKeyboard(string querry = null)
+        public static InlineKeyboardMarkup payKeyboard()
         {
             InlineKeyboardButton[][] buttons = new InlineKeyboardButton[][]
             {
-                new InlineKeyboardButton[]{ new InlineKeyboardButton("💵 Пополнить баланс"){CallbackData = $"/pay pay {querry}",} },
-                new InlineKeyboardButton[]{ new InlineKeyboardButton("🎟️ Использовать промокод") { CallbackData = $"/pay p {querry}", }},
-                new InlineKeyboardButton[]{ new InlineKeyboardButton("⭐️ Тарифы") { CallbackData = $"/tarif {querry}", }},
+                new InlineKeyboardButton[]{ new InlineKeyboardButton("💵 Пополнить баланс"){CallbackData = $"/pay pay",} },
+                new InlineKeyboardButton[]{ new InlineKeyboardButton("🎟️ Использовать промокод") { CallbackData = $"/pay p", }},
+                new InlineKeyboardButton[]{ new InlineKeyboardButton("⭐️ Тарифы") { CallbackData = $"/tarif", }},
             };
             return buttons;
         }
@@ -103,8 +103,8 @@ namespace Wb_star_bot.Telegram_Bot
                 case "1":
                     buttons = new InlineKeyboardButton[][]
                     {
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Выбрать") {CallbackData =  $"/tarif s1 {args[2]}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back {args[2]}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Выбрать") {CallbackData =  $"/tarif s1", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back", } },
                     };
                     bot.clientBook[senderId].queryCallback = (a,b,c)=> TarifSelect(a,client,c);
                     summary = $"{standartTarifSummary}\n\n💰 *Стоимость тарифа: {ClientData.standartTarifCost}₽ в месяц*";
@@ -112,30 +112,30 @@ namespace Wb_star_bot.Telegram_Bot
                 case "2":
                     buttons = new InlineKeyboardButton[][]
                     {
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Выбрать") {CallbackData =  $"/tarif s2 {args[2]}", } },
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back {args[2]}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Выбрать") {CallbackData =  $"/tarif s2", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back", } },
                     };
                     bot.clientBook[senderId].queryCallback = (a, b, c) => TarifSelect(a, client, c);
                     summary = $"{premiumTarifSummary}\n\n💰 *Стоимость тарифа: {ClientData.premiumTarifCost}₽ в месяц*";
                     break;
                 case "pay":
-                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", getPayButtons("tarif", args[2], " ~"));
+                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", getPayButtons("tarif", " ~"));
                 case "p":
-                    bot.clientBook[senderId].messageCallback = (a, b, c) => ActivePromocode(a, new ClientData[] { bot.clientDatas[args[2]] }, c);
-                    return ("🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back {args[2]}", });
+                    bot.clientBook[senderId].messageCallback = (a, b, c) => ActivePromocode(a, client, c);
+                    return ("🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back", });
                 case "back":
                     bot.clientBook[senderId].messageCallback = null;
-                    return TarifSelectTable(bot, new ClientData[] { bot.clientDatas[args[2]] }, senderId);
+                    return TarifSelectTable(bot, client, senderId);
                 case "any":
                     buttons = new InlineKeyboardButton[][]
                     {
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back {args[2]}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/tarif back", } },
                     };
-                    bot.clientBook[senderId].messageCallback = (a, b, c) => SelectPrice(a, new ClientData[] { bot.clientDatas[args[2]] }, c);
+                    bot.clientBook[senderId].messageCallback = (a, b, c) => SelectPrice(a, client, c);
                     return ($"⬇️ Введите желаюмую сумму пополнения.\n\n🔰 Ваш бонус к пополнению: 0%\n\n⚠️ Минимальная сумма пополнения: {minPaySumm} руб.", buttons);
                 default:
-                    SelectPrice(bot, new ClientData[] { bot.clientDatas[args[2]] }, senderId, int.Parse(args[1]));
-                    break;
+                    SelectPrice(bot, client, senderId, int.Parse(args[1]));
+                    return (null,null);
             }
             return (summary, buttons);
         }
@@ -145,7 +145,7 @@ namespace Wb_star_bot.Telegram_Bot
             CallbackQuery query = arg as CallbackQuery;
             long senderId = query.Message.Chat.Id;
             string[] args = query.Data.Split(" ");
-            ClientData handleClient = bot.clientDatas[args[2]];
+            ClientData handleClient = client[0];
 
             switch (args[1])
             {
@@ -160,7 +160,7 @@ namespace Wb_star_bot.Telegram_Bot
                     }
                     else
                     {
-                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back {args[2]}" });
+                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
                     }
                     break;
                 case "s2":
@@ -174,13 +174,13 @@ namespace Wb_star_bot.Telegram_Bot
                     }
                     else
                     {
-                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back {args[2]}" });
+                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
                     }
                     break;
                 case "back":
                     return TarifSelectTable(bot, new ClientData[] { handleClient }, senderId);
             }
-            return (balanceLow, new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back {args[2]}" });
+            return (balanceLow, new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
         }
 
         public static (string, InlineKeyboardMarkup?) AccountPaySelect(Bot bot, ClientData[]? client, object? query)
@@ -199,23 +199,23 @@ namespace Wb_star_bot.Telegram_Bot
             switch (args[1])
             {
                 case "pay":
-                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", getPayButtons("pay", args[2], " ~"));
+                    return ("⬇️ Выберите сумму оплаты:\n\n🔰 Ваш бонус к пополнению: 0%", getPayButtons("pay", " ~"));
                 case "p":
-                    bot.clientBook[senderId].messageCallback = (a, b, c) => ActivePromocode(a, new ClientData[] { bot.clientDatas[args[2]] }, c);
-                    return ("🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/pay back {args[2]}", });
+                    bot.clientBook[senderId].messageCallback = (a, b, c) => ActivePromocode(a, client, c);
+                    return ("🎟️ Введите промокод:", new InlineKeyboardButton("Назад") { CallbackData = $"/pay back", });
                 case "back":
                     bot.clientBook[senderId].messageCallback = null;
-                    return AccountPay(bot, new ClientData[] { bot.clientDatas[args[2]] }, callbackQuery.Message.Chat.Id);
+                    return AccountPay(bot, client, callbackQuery.Message.Chat.Id);
                 case "any":
                     buttons = new InlineKeyboardButton[][]
                     {
-                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/pay back {args[2]}", } },
+                        new InlineKeyboardButton[]{ new InlineKeyboardButton("Назад") {CallbackData = $"/pay back", } },
                     };
-                    bot.clientBook[senderId].messageCallback = (a, b, c) => SelectPrice(a, new ClientData[] { bot.clientDatas[args[2]] }, c);
+                    bot.clientBook[senderId].messageCallback = (a, b, c) => SelectPrice(a, client, c);
                     return ($"⬇️ Введите желаюмую сумму пополнения.\n\n🔰 Ваш бонус к пополнению: 0%\n\n⚠️ Минимальная сумма пополнения: {minPaySumm} руб.", buttons);
                 default:
-                    SelectPrice(bot, new ClientData[] { bot.clientDatas[args[2]] }, senderId, int.Parse(args[1]));
-                    return ("Пополнение баланса", null);
+                    SelectPrice(bot, client, senderId, int.Parse(args[1]));
+                    return (null, null);
             }
 
             throw new Exception("Unk command!");
@@ -239,6 +239,7 @@ namespace Wb_star_bot.Telegram_Bot
                     {
                         SelectPrice(bot, client, senderId, price);
                         bot.clientBook[senderId].messageCallback = null;
+
                     }
                     catch (Exception e)
                     {
@@ -259,6 +260,8 @@ namespace Wb_star_bot.Telegram_Bot
             try
             {
                 bot.SendInvoce(senderId, client[0].apiKey, client[0].Name, message);
+                bot.clientBook[senderId].queryCallback = null;
+                bot.clientBook[senderId].currentPage = null;
             }
             catch
             {

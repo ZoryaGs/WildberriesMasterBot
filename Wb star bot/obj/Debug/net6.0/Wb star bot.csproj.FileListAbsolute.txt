@@ -86,3 +86,22 @@ C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\
 C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
 C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
 C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\SixLabors.ImageSharp.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\SixLabors.ImageSharp.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
+C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll

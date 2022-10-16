@@ -110,7 +110,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
         {
             if (data == null) return;
 
-            DateTime Msc = data.lastUpdate.AddHours(3);
+            DateTime Msc = data.lastUpdate;
             string date = $"{Msc.Year}-{Msc.Month}-{Msc.Day}T{Msc.Hour}:{Msc.Minute}:{Msc.Second}";
             string url = $"{baseUrl}{req}?dateFrom={date}{addArg}&key={apiKey}";
             Console.WriteLine(url);
@@ -141,6 +141,9 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
         public static void getImage(int numId, string outPut)
         {
+            if (File.Exists($"{outPut}{numId}.jpeg"))
+                return;
+
             using (WebClient client = new WebClient())
             {
                 Image? bmp1 = getBmp(client, 1);
@@ -237,6 +240,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     }
                 }
             }
+
         }
 
         public static (string, InlineKeyboardMarkup?) GetProductPosition(Bot bot, ClientData[]? client, object? query)
@@ -396,10 +400,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             return content;
         }
 
-        public static async void GetItemName(int numId, string outPut)
+        public static async Task<string> GetItemName(int numId, string outPut)
         {
             if (File.Exists($"{outPut}{numId}.txt"))
-                return;
+                return File.ReadAllText($"{outPut}{numId}.txt");
             int basket = 1;
 
             if (numId < 20000000)
@@ -450,14 +454,17 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     File.WriteAllText($"{outPut}{numId}.txt", token);
 
+                    return token;
+
                 }
                 catch
                 {
                     if (basket >= 9)
-                        return;
+                        return "Без названия";
                     basket++;
                 }
             }
+            return "Без названия";
         }
 
         public static async void ClientDataUpdating(object arg)
@@ -469,7 +476,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                 foreach (ClientData data in bot.clientDatas.Values)
                 {
-                    Console.WriteLine("REFRESH");
                     if (data.apiKey == null || data.balance == 0 || !data.active)
                         continue;
 
@@ -489,14 +495,19 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             if (!File.Exists($"{outPut}{order.nmId}.jpeg"))
                             {
                                 getImage(order.nmId, outPut);
-                                GetItemName(order.nmId, outPut);
+                                await GetItemName(order.nmId, outPut);
                             }
 
                             string content = "\n";
                             content += $"{data.Smile} {data.Name}\n";
-                            content += $"_{order.lastChangeDate}_\n\n";
-                            content += $"🆔 Артикул WB: {order.nmId}\n";
+                            content += $"_{order.date}_\n\n";
+                            content += $"🆔 ID товара: {order.nmId}\n";
+                            content += $"🏷 {order.brand} | {order.supplierArticle}\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
+                            content += $"🌐 {order.warehouseName} → {order.oblast}\n";
+                            if (!order.isCancel)
+                                content += $"💵 Выручка: {order.price}";
+
                             content += $"{(order.isCancel ? "🚚" : "🚛")} Статус: {(order.isCancel ? "Возврат" : "В пути")}\n";
                             content += $"\n📦 Остаток:{order.count} ";
 
@@ -526,16 +537,15 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
         {
             Bot bot = arg as Bot;
 
-            DateTime tm = DateTime.UtcNow;
+            DateTime tm = DateTime.UtcNow.AddHours(3);
             tm = tm.AddHours(-tm.Hour).AddMinutes(-tm.Minute).AddSeconds(-tm.Second);
 
-            TimeSpan waitTime = tm.AddDays(1).AddHours(3).Subtract(DateTime.UtcNow);
-
+            TimeSpan waitTime = tm.AddDays(1).Subtract(DateTime.UtcNow.AddHours(3));
+            Console.Write(waitTime);
             while (true)
             {
-                Thread.Sleep(waitTime);
+                Thread.Sleep(3600000);
                 waitTime = new TimeSpan(0, 1, 0, 0);
-
                 foreach (ClientData data in bot.clientDatas.Values)
                 {
                     if (data.apiKey == null || data.balance == 0 || !data.active)
@@ -543,14 +553,15 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     try
                     {
-                        dailyMess(data);
+                        await dailyMess(data);
 
                         async Task dailyMess(ClientData data)
                         {
+                            Console.WriteLine("DATA DAILY MESSAGE");
                             string content = $"❇️        Статистика за {DateTime.UtcNow.ToString("d")}        ❇️\n";
                             uint ordersCount = 0;
                             uint backCount = 0;
-                            float income = 0;
+                            int income = 0;
                             Dictionary<ulong, List<OrdersData.Order>> ordersDictionary = new Dictionary<ulong, List<OrdersData.Order>>();
                             SortedList<uint, int> endingOrders = new SortedList<uint, int>();
 
@@ -565,12 +576,12 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                                 if (order.isCancel)
                                 {
-                                    income -= order.totalPrice;
+                                    income -= order.price;
                                     backCount++;
                                 }
                                 else
                                 {
-                                    income += order.totalPrice;
+                                    income += order.price;
                                     ordersCount++;
                                 }
 
@@ -598,7 +609,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     {
                                         if (ord.isCancel)
                                             b++;
-                                        else { sm += ord.totalPrice; c++; }
+                                        else {
+                                            sm += ord.price;
+                                            c++;
+                                        }
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
@@ -621,7 +635,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     {
                                         if (ord.isCancel)
                                             b++;
-                                        else { sm += ord.totalPrice; c++; }
+                                        else {
+                                            sm += ord.price;
+                                            c++;
+                                        }
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
@@ -646,5 +663,119 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 }
             }
         }
+
+        public static (string, InlineKeyboardMarkup?) ClientDataOrders(Bot bot, ClientData[]? client, object? arg)
+        {
+            long senderId = (long)arg;
+
+            if (client.Length == 1)
+            {
+                bot.clientBook[senderId].queryCallback = OrderStatistic;
+                return (OrderStatistic(bot, client, "/products 0 0"));
+            }
+            else if (client.Length > 1)
+            {
+                bot.clientBook[senderId].queryCallback = OrderStatistic;
+
+                InlineKeyboardButton[][] buttons = new InlineKeyboardButton[client.Length][];
+
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    buttons[i] = new InlineKeyboardButton[] { new InlineKeyboardButton(client[i].Name) { CallbackData = $"/products {i} 0" } };
+                }
+                bot.clientBook[senderId].queryCallback = OrderStatistic;
+                return ("⬇️ Выберите нужный аккаунт для просмотра товаров:", buttons);
+            }
+
+            return ("❌ У вас нет ни одного привязанного аккаунта!", null);
+        }
+
+        public static (string, InlineKeyboardMarkup?) OrderStatistic(Bot bot, ClientData[]? client, object? arg)
+        {
+            string[] args = arg is string ? ((string)arg).Split(' ') : ((CallbackQuery)arg).Data.Split(' ');
+            ClientData handleClient = client[int.Parse(args[1])];
+
+            InlineKeyboardButton backButton = new InlineKeyboardButton("Назад") { CallbackData = "/products back" };
+
+            if (handleClient.ordersData.uniqOrders.Count == 0)
+            {
+                return ("❌ На выбранном аккаунте не найден ни один товар. Скорее всего вы совсем недавно начали бользоваться нашим ботом, либо к вам не поступали заказы в течении последних трех месяцев.\nНичего, скоро все изменится!", client.Length > 1 ? backButton : null);
+            }
+
+            int ord = int.Parse(args[2]);
+            DateTime dt = DateTime.UtcNow.AddHours(3).AddDays(-7);
+            string content = $"⬇️ *Статистика за неделю (с {dt.Day}.{dt.Month}.{dt.Year})*\n _Страница {ord / 2 + 1}/{(handleClient.ordersData.uniqOrders.Count + 1) / 2}_\n\n";
+            List<InlineKeyboardButton[]> buttons = new List<InlineKeyboardButton[]>();
+
+            for (int i = ord; i < Math.Min(ord + 2, handleClient.ordersData.uniqOrders.Count); i++)
+            {
+                List<ulong> order = handleClient.ordersData.uniqOrders.ElementAt(i).Value;
+                int ordCount = 0;
+                int backCount = 0;
+                double income = 0;
+
+                for (int j = 1; j <= order.Count; j++)
+                {
+                    OrdersData.Order o = handleClient.ordersData.orders[order[^j]];
+
+                    if (o.date > dt)
+                    {
+                        if (o.isCancel)
+                        {
+                            backCount++;
+                        }
+                        else
+                        {
+                            ordCount++;
+                            income += o.price;
+                        }
+                    }
+                }
+
+                OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
+                content += $"*{curOrd.itemName}*\n";
+                content += $"🆔 ID товара: {curOrd.nmId}\n";
+                content += $"🏷 {curOrd.brand} | {curOrd.supplierArticle}\n";
+                content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
+                content += $"🚛 Заказы: {ordCount}\n";
+                content += $"🚚 Возвраты: {backCount}\n";
+                content += $"📦 Остаток: {curOrd.count}\n";
+                content += $"💰 Выручка: {income}\n\n";
+            }
+
+
+            if (ord > 0 || ord < handleClient.ordersData.uniqOrders.Count - 2)
+            {
+                if (ord == 0)
+                {
+                    buttons.Add(new InlineKeyboardButton[]
+                    {
+                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
+                    });
+                }
+                else if (ord >= handleClient.ordersData.uniqOrders.Count - 2)
+                {
+                    buttons.Add(new InlineKeyboardButton[]
+                    {
+                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
+                    });
+                }
+                else
+                {
+                    buttons.Add(new InlineKeyboardButton[]
+                    {
+                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
+                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
+                    });
+                }
+            }
+
+            if (client.Length > 1)
+                buttons.Add(new InlineKeyboardButton[] { backButton });
+
+            return (content, buttons.Count > 0 ? buttons.ToArray() : null);
+        }
+
+
     }
 }

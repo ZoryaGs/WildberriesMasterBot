@@ -20,6 +20,9 @@ Bot bot = new Bot(token, new Dictionary<string, BotPage[]>
     {"/my",new BotPage[]{
         new BotPage(0, Bot.GetClientAccountInfo),
     }},
+    {"/products",new BotPage[]{
+        new BotPage(0, WbBaseManager.ClientDataOrders),
+    }},
     {"/search", new BotPage[]{
         new BotPage(0, WbBaseManager.GetProductPosition),
     }},
