@@ -257,7 +257,13 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
         public static async Task GetProductPositionCallback(Bot bot, ClientData[]? client, Message? message)
         {
             string[] mes = message.Text.Split(" ");
-            long id = long.Parse(mes[0]);
+            long id = 0;
+            bot.clientBook[message.Chat.Id].messageCallback = null;
+
+            if (mes.Length < 2 || !long.TryParse(mes[0], out id)){
+                await bot.SendMessage(message.Chat.Id, "❌ Неверный поисковой запрос!");
+                return;
+            }
 
             string category = "";
             for (int i = 1; i < mes.Length; i++)
@@ -265,7 +271,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 category += mes[i] + (i == mes.Length - 1 ? "" : " ");
             }
 
-            bot.clientBook[message.Chat.Id].messageCallback = null;
             await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryItems(category, id));
         }
         public static async Task GetCategoryAdsCallback(Bot bot, ClientData[]? client, Message? message)
@@ -340,7 +345,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
         {
             int position = 1;
 
-            for (int page = 0; page < 100; page++)
+            for (int page = 0; page <= 50; page++)
             {
                 // -1059500,-72639,-3826860,-5551775
                 //-1059500,0,-10000000,-1000000
@@ -367,7 +372,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     break;
                 }
             }
-            return "😢 Ваш товар не ранжируется на первых 100 страницах.";
+            return "😢 Ваш товар не ранжируется на первых 50 страницах.";
         }
 
         public static string getCategoryCpmList(string category)
@@ -541,7 +546,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             TimeSpan waitTime = tm.AddDays(1).Subtract(DateTime.UtcNow.AddHours(3));
             while (true)
             {
-                Console.WriteLine("Время до слуд. дневного оповещения: " + waitTime.ToString());
+                Console.WriteLine("Daily message wait time: " + waitTime.ToString());
 
                 Thread.Sleep(waitTime);
                 waitTime = new TimeSpan(0, 1, 0, 0);
@@ -690,88 +695,95 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
         public static (string, InlineKeyboardMarkup?) OrderStatistic(Bot bot, ClientData[]? client, object? arg)
         {
-            string[] args = arg is string ? ((string)arg).Split(' ') : ((CallbackQuery)arg).Data.Split(' ');
-            ClientData handleClient = client[int.Parse(args[1])];
-
-            InlineKeyboardButton backButton = new InlineKeyboardButton("Назад") { CallbackData = "/products back" };
-
-            if (handleClient.ordersData.uniqOrders.Count == 0)
+            try
             {
-                return ("❌ На выбранном аккаунте не найден ни один товар. Скорее всего вы совсем недавно начали бользоваться нашим ботом, либо к вам не поступали заказы в течении последних трех месяцев.\nНичего, скоро все изменится!", client.Length > 1 ? backButton : null);
-            }
+                string[] args = arg is string ? ((string)arg).Split(' ') : ((CallbackQuery)arg).Data.Split(' ');
+                ClientData handleClient = client[int.Parse(args[1])];
 
-            int ord = int.Parse(args[2]);
-            DateTime dt = DateTime.UtcNow.AddHours(3).AddDays(-7);
-            string content = $"⬇️ *Статистика за неделю (с {dt.Day}.{dt.Month}.{dt.Year})*\n _Страница {ord / 2 + 1}/{(handleClient.ordersData.uniqOrders.Count + 1) / 2}_\n\n";
-            List<InlineKeyboardButton[]> buttons = new List<InlineKeyboardButton[]>();
+                InlineKeyboardButton backButton = new InlineKeyboardButton("Назад") { CallbackData = "/products back" };
 
-            for (int i = ord; i < Math.Min(ord + 2, handleClient.ordersData.uniqOrders.Count); i++)
-            {
-                List<ulong> order = handleClient.ordersData.uniqOrders.ElementAt(i).Value;
-                int ordCount = 0;
-                int backCount = 0;
-                double income = 0;
-
-                for (int j = 1; j <= order.Count; j++)
+                if (handleClient.ordersData.uniqOrders.Count == 0)
                 {
-                    OrdersData.Order o = handleClient.ordersData.orders[order[^j]];
+                    return ("❌ На выбранном аккаунте не найден ни один товар. Скорее всего вы совсем недавно начали бользоваться нашим ботом, либо к вам не поступали заказы в течении последних трех месяцев.\nНичего, скоро все изменится!", client.Length > 1 ? backButton : null);
+                }
 
-                    if (o.date > dt)
+                int ord = int.Parse(args[2]);
+                DateTime dt = DateTime.UtcNow.AddHours(3).AddDays(-7);
+                string content = $"⬇️ *Статистика за неделю (с {dt.Day}.{dt.Month}.{dt.Year})*\n _Страница {ord / 2 + 1}/{(handleClient.ordersData.uniqOrders.Count + 1) / 2}_\n\n";
+                List<InlineKeyboardButton[]> buttons = new List<InlineKeyboardButton[]>();
+
+                for (int i = ord; i < Math.Min(ord + 2, handleClient.ordersData.uniqOrders.Count); i++)
+                {
+                    List<ulong> order = handleClient.ordersData.uniqOrders.ElementAt(i).Value;
+                    int ordCount = 0;
+                    int backCount = 0;
+                    double income = 0;
+
+                    for (int j = 1; j <= order.Count; j++)
                     {
-                        if (o.isCancel)
+                        OrdersData.Order o = handleClient.ordersData.orders[order[^j]];
+
+                        if (o.date > dt)
                         {
-                            backCount++;
+                            if (o.isCancel)
+                            {
+                                backCount++;
+                            }
+                            else
+                            {
+                                ordCount++;
+                                income += o.price;
+                            }
                         }
-                        else
+                    }
+
+                    OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
+                    content += $"*{curOrd.itemName}*\n";
+                    content += $"🆔 ID товара: {curOrd.nmId}\n";
+                    content += $"🏷 {curOrd.brand} | {curOrd.supplierArticle}\n";
+                    content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
+                    content += $"🚛 Заказы: {ordCount}\n";
+                    content += $"🚚 Возвраты: {backCount}\n";
+                    content += $"📦 Остаток: {curOrd.count}\n";
+                    content += $"💰 Выручка: {income}\n\n";
+                }
+
+
+                if (ord > 0 || ord < handleClient.ordersData.uniqOrders.Count - 2)
+                {
+                    if (ord == 0)
+                    {
+                        buttons.Add(new InlineKeyboardButton[]
                         {
-                            ordCount++;
-                            income += o.price;
-                        }
+                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
+                        });
+                    }
+                    else if (ord >= handleClient.ordersData.uniqOrders.Count - 2)
+                    {
+                        buttons.Add(new InlineKeyboardButton[]
+                        {
+                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
+                        });
+                    }
+                    else
+                    {
+                        buttons.Add(new InlineKeyboardButton[]
+                        {
+                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
+                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
+                        });
                     }
                 }
 
-                OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
-                content += $"*{curOrd.itemName}*\n";
-                content += $"🆔 ID товара: {curOrd.nmId}\n";
-                content += $"🏷 {curOrd.brand} | {curOrd.supplierArticle}\n";
-                content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
-                content += $"🚛 Заказы: {ordCount}\n";
-                content += $"🚚 Возвраты: {backCount}\n";
-                content += $"📦 Остаток: {curOrd.count}\n";
-                content += $"💰 Выручка: {income}\n\n";
-            }
+                if (client.Length > 1)
+                    buttons.Add(new InlineKeyboardButton[] { backButton });
 
-
-            if (ord > 0 || ord < handleClient.ordersData.uniqOrders.Count - 2)
+                return (content, buttons.Count > 0 ? buttons.ToArray() : null);
+            }catch(Exception e)
             {
-                if (ord == 0)
-                {
-                    buttons.Add(new InlineKeyboardButton[]
-                    {
-                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
-                    });
-                }
-                else if (ord >= handleClient.ordersData.uniqOrders.Count - 2)
-                {
-                    buttons.Add(new InlineKeyboardButton[]
-                    {
-                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
-                    });
-                }
-                else
-                {
-                    buttons.Add(new InlineKeyboardButton[]
-                    {
-                        new InlineKeyboardButton("← Пред"){ CallbackData = $"/products {args[1]} {ord -2}" },
-                        new InlineKeyboardButton("След →"){ CallbackData = $"/products {args[1]} {ord +2}" },
-                    });
-                }
+                Console.WriteLine(e);
             }
-
-            if (client.Length > 1)
-                buttons.Add(new InlineKeyboardButton[] { backButton });
-
-            return (content, buttons.Count > 0 ? buttons.ToArray() : null);
+            return ("Системная ошибка. Мы уже работаем над ее исправлением", null);
         }
 
 

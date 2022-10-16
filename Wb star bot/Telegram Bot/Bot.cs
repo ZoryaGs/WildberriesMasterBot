@@ -61,12 +61,14 @@ namespace Wb_star_bot.Telegram_Bot
             "🍉",
         };
 
+        public bool[] consoleLog = new bool[2] {false,false};
+
         public Bot(string token, Dictionary<string, BotPage[]> commands)
         {
             botClient = new TelegramBotClient(token);
 
             this.commands = commands;
-            Console.WriteLine("Запущен бот " + botClient.GetMeAsync().Result.FirstName);
+            Console.WriteLine("Bot Started: " + botClient.GetMeAsync().Result.FirstName);
 
             botClient.StartReceiving(
                 ReciveHandler,
@@ -197,7 +199,8 @@ namespace Wb_star_bot.Telegram_Bot
                             curr.currentPage = query.Message.MessageId;
                             await botClient.EditMessageTextAsync(query.Message.Chat, query.Message.MessageId, answ.Value.Item1, replyMarkup: answ.Value.Item2, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
 
-                            Console.WriteLine(query.Data);
+                            if (consoleLog[1])
+                            Console.WriteLine($"{senderId}: {query.Data}");
                         }
                     }
                     else
@@ -213,12 +216,18 @@ namespace Wb_star_bot.Telegram_Bot
 
                 async void dlt()
                 {
-                    await botClient.DeleteMessageAsync(query.Message.Chat, query.Message.MessageId);
+                    try
+                    {
+                        await botClient.DeleteMessageAsync(query.Message.Chat, query.Message.MessageId);
 
-                    (string, InlineKeyboardMarkup?) ans = commands[cmd][0].queryCallback?.Invoke(this, caller, senderId) ?? ("Не известаня команда", null);
-                    Task<Message> snd = new Task<Message>(() => SendMessage(senderId, ans.Item1, ans.Item2).Result);
-                    snd.Start();
-                    clientBook[senderId].currentPage = snd.Result.MessageId;
+                        (string, InlineKeyboardMarkup?) ans = commands[cmd][0].queryCallback?.Invoke(this, caller, senderId) ?? ("Не известаня команда", null);
+                        Task<Message> snd = new Task<Message>(() => SendMessage(senderId, ans.Item1, ans.Item2).Result);
+                        snd.Start();
+                        clientBook[senderId].currentPage = snd.Result.MessageId;
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
             }
         }
@@ -285,7 +294,7 @@ namespace Wb_star_bot.Telegram_Bot
                     await SendMessage(senderId, answerList[answer.unk_command]);
                 }
             }
-
+            if (consoleLog[0])
             Console.WriteLine($"{senderId}: {message}");
         }
 

@@ -39,7 +39,15 @@ while (true)
 
     switch (cmd)
     {
-      //  case "test":WbBaseManager.test(bot);break;
+        //  case "test":WbBaseManager.test(bot);break;
+        case "echo 0":
+            bot.consoleLog[0] = !bot.consoleLog[0];
+            Console.WriteLine($"Messages: {(bot.consoleLog[0] ? "on" : "off")}");
+            break;
+        case "echo 1":
+            bot.consoleLog[1] = !bot.consoleLog[1];
+            Console.WriteLine($"Querry datas: {(bot.consoleLog[1] ? "on" : "off")}");
+            break;
         case "end": return;
 
     }

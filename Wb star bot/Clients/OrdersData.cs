@@ -106,11 +106,9 @@ namespace Wb_star_bot.Clients
             {
                 get
                 {
-                    string output = Directory.GetCurrentDirectory() + "/" + nmId.ToString() + ".txt";
-                    if (File.Exists(output)){
-                        return File.ReadAllText(output);
-                    }
-                    return "_имя еще не получено_";
+                    Task<string> task = new Task<string>(() => WbBaseManager.GetItemName(nmId, Directory.GetCurrentDirectory() + "/").Result);
+                    task.Start();
+                    return task.Result;
                 }
             }
         }
