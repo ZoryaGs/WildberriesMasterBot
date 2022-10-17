@@ -144,7 +144,22 @@ namespace Wb_star_bot.Telegram_Bot
             if (text.Length > MaxMessageLenght)
                 text = text.Remove(MaxMessageLenght);
 
-            await botClient.SendPhotoAsync(senderId, new InputOnlineFile(stream, "photo"), text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+            try
+            {
+                if (stream != null)
+                {
+
+                    InputOnlineFile file = new InputOnlineFile(stream, "photo");
+                    if (file != null && file.Content != null)
+                        await botClient.SendPhotoAsync(senderId, file, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                    else
+                        await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                }
+            }
+            catch(Exception e)
+            {
+                await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+            }
         }
 
         public async Task QueryHandler(CallbackQuery query)
@@ -617,7 +632,7 @@ namespace Wb_star_bot.Telegram_Bot
                 string AccountSummary = $"{currentData.Smile} {currentData.Name}\n\n";
                 AccountSummary += $"{(currentData.tarif == ClientData.subscibeType.none ? "⭕️ Тариф: Не выбран" : "✨ Тариф: " + (currentData.tarif == ClientData.subscibeType.simple ? "Стандарт" : "Премиум"))}\n";
                 AccountSummary += $"🔰 Реферальный бонус: {currentData.promocode}\n";
-                AccountSummary += $"💰 Текущий баланс: {currentData.balance} руб.";
+                AccountSummary += $"💰 Текущий баланс: {(int)currentData.balance} руб.";
 
                 return (AccountSummary, new InlineKeyboardMarkup(new InlineKeyboardButton[][] {
                 new InlineKeyboardButton[]{ new InlineKeyboardButton("💰 Пополнить баланс") { CallbackData = $"/my {acId} pay" } },

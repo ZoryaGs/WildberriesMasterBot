@@ -39,6 +39,18 @@ namespace Wb_star_bot.Wb_handler
 
         public delegate void onFinished();
 
+        public static long[] baskets = new long[]
+        {
+            20000000,
+            30000000,
+            40000000,
+            75000000,
+            100000000,
+            110000000,
+            115000000,
+            120000000,
+        };
+
         #region OldVer 
         /*
 public static string OrdersToday(Bot bot, ClientData[]? client) => getData(client, "orders", currentDay) ?? "Заказов за сегодня нет";
@@ -187,35 +199,35 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                 int basket = 1;
 
-                if (numId < 20000000)
+                if (numId < baskets[0])
                 {
                     basket = 1;
                 }
-                else if (numId < 30000000)
+                else if (numId < baskets[1])
                 {
                     basket = 2;
                 }
-                else if (numId < 40000000)
+                else if (numId < baskets[2])
                 {
                     basket = 3;
                 }
-                else if (numId < 72000000)
+                else if (numId < baskets[3])
                 {
                     basket = 4;
                 }
-                else if (numId < 100000000)
+                else if (numId < baskets[4])
                 {
                     basket = 5;
                 }
-                else if (numId < 110000000)
+                else if (numId < baskets[5])
                 {
                     basket = 6;
                 }
-                else if (numId < 112000000)
+                else if (numId < baskets[6])
                 {
                     basket = 7;
                 }
-                else if (numId < 118000000)
+                else if (numId < baskets[7])
                 {
                     basket = 8;
                 }
@@ -409,35 +421,35 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 return File.ReadAllText($"{outPut}{numId}.txt");
             int basket = 1;
 
-            if (numId < 20000000)
+            if (numId < baskets[0])
             {
                 basket = 1;
             }
-            else if (numId < 30000000)
+            else if (numId < baskets[1])
             {
                 basket = 2;
             }
-            else if (numId < 40000000)
+            else if (numId < baskets[2])
             {
                 basket = 3;
             }
-            else if (numId < 72000000)
+            else if (numId < baskets[3])
             {
                 basket = 4;
             }
-            else if (numId < 100000000)
+            else if (numId < baskets[4])
             {
                 basket = 5;
             }
-            else if (numId < 110000000)
+            else if (numId < baskets[5])
             {
                 basket = 6;
             }
-            else if (numId < 112000000)
+            else if (numId < baskets[6])
             {
                 basket = 7;
             }
-            else if (numId < 118000000)
+            else if (numId < baskets[7])
             {
                 basket = 8;
             }
@@ -453,10 +465,12 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     HttpContent client = new HttpClient().GetAsync($"{addr}{numId / 100000}/part{numId / 1000}/{numId}/info/ru/card.json").Result.Content;
                     JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
                     string token = data.GetValue("imt_name")?.Value<string>() ?? null;
-                    File.Create($"{outPut}{numId}.txt").Close();
 
-                    File.WriteAllText($"{outPut}{numId}.txt", token);
-
+                    if (token.Length > 0)
+                    {
+                        File.Create($"{outPut}{numId}.txt").Close();
+                        File.WriteAllText($"{outPut}{numId}.txt", token);
+                    }
                     return token;
 
                 }
