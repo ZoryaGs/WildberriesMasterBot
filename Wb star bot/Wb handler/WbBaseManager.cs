@@ -704,6 +704,11 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                 InlineKeyboardButton backButton = new InlineKeyboardButton("Назад") { CallbackData = "/products back" };
 
+                if (args[1] == "back")
+                {
+                    return ClientDataOrders(bot, client, ((CallbackQuery)arg).Message.Chat.Id);
+                }
+
                 if (handleClient.ordersData.uniqOrders.Count == 0)
                 {
                     return ("❌ На выбранном аккаунте не найден ни один товар. Скорее всего вы совсем недавно начали бользоваться нашим ботом, либо к вам не поступали заказы в течении последних трех месяцев.\nНичего, скоро все изменится!", client.Length > 1 ? backButton : null);
