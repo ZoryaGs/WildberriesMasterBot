@@ -82,7 +82,7 @@ namespace Wb_star_bot.Clients
             public int discountPercent;
             public string warehouseName;
             public string oblast;
-            public int incomeID;
+            public int? incomeID;
             public ulong odid;
             public int nmId;
             public string brand;
@@ -106,7 +106,7 @@ namespace Wb_star_bot.Clients
             {
                 get
                 {
-                    Task<string> task = new Task<string>(() => WbBaseManager.GetItemName(nmId, Directory.GetCurrentDirectory() + "/").Result);
+                    Task<string> task = new Task<string>(() => WbBaseManager.GetItemName(nmId).Result);
                     task.Start();
                     return task.Result;
                 }

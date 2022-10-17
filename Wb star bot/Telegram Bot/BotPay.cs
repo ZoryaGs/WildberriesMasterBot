@@ -252,6 +252,7 @@ namespace Wb_star_bot.Telegram_Bot
             }
 
             await bot.botClient.DeleteMessageAsync(senderId, message.MessageId);
+            bot.clientBook[message.Chat.Id].currentPage = null;
         }
 
         public static async void SelectPrice(Bot bot, ClientData[]? client, long senderId, int message)
@@ -273,6 +274,7 @@ namespace Wb_star_bot.Telegram_Bot
             string? mes = message.Text;
             string callback = $"❌ Промокод \"{(mes.Length > 32 ? mes.Remove(32) + "..." : mes)}\" не активен. Повторите попытку или вернитесь к выбору оплаты.";
             await bot.botClient.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+            bot.clientBook[message.Chat.Id].currentPage = null;
 
             bool act = true;
 

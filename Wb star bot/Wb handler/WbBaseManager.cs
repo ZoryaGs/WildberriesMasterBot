@@ -11,6 +11,7 @@ using Wb_star_bot.Clients;
 using Newtonsoft.Json.Linq;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
+using Telegram.Bot.Types.InputFiles;
 using System.Collections;
 using Telegram.Bot;
 using SixLabors.ImageSharp;
@@ -38,6 +39,8 @@ namespace Wb_star_bot.Wb_handler
         private static DateTime lastMounth => new DateTime(timeNow.Year, timeNow.Month, 1).AddMonths(-1);
 
         public delegate void onFinished();
+
+        public static string output => $"{Directory.GetCurrentDirectory()}/";
 
         public static long[] baskets = new long[]
         {
@@ -150,9 +153,9 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             return obj.GetValue("supplierName").Value<string>();
         }
 
-        public static void getImage(int numId, string outPut)
+        public static void getImage(int numId)
         {
-            if (File.Exists($"{outPut}{numId}.jpeg"))
+            if (File.Exists($"{output}{numId}.jpeg"))
                 return;
 
             using (WebClient client = new WebClient())
@@ -179,7 +182,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             }
                         }
 
-                        img.SaveAsJpeg($"{outPut}{numId}.jpeg");
+                        img.SaveAsJpeg($"{output}{numId}.jpeg");
                     }
                     bmp1?.Dispose();
                     bmp2?.Dispose();
@@ -187,9 +190,15 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 }
                 else
                 {
-                    using (Image<Rgba32> img = new Image<Rgba32>(246 * 3, 328, Color.Black))
+                    try
                     {
-                        img.SaveAsJpeg($"{outPut}{numId}.jpeg");
+                        using (Image<Rgba32> img = new Image<Rgba32>(246 * 3, 328, Color.Black))
+                        {
+                            img.SaveAsJpeg($"{output}{numId}.jpeg");
+                        }
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine("Cannot save image: " + numId.ToString());
                     }
                 }
             }
@@ -283,14 +292,21 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 category += mes[i] + (i == mes.Length - 1 ? "" : " ");
             }
 
-            await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryItems(category, id));
+            await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск рекламной позиции...").Result.MessageId, getCategoryItems(category, id));
         }
         public static async Task GetCategoryAdsCallback(Bot bot, ClientData[]? client, Message? message)
         {
-            string mes = message.Text;
+            try
+            {
+                string mes = message.Text;
 
-            bot.clientBook[message.Chat.Id].messageCallback = null;
-            await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryCpmList(mes));
+                bot.clientBook[message.Chat.Id].messageCallback = null;
+                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryCpmList(mes));
+            }
+            catch
+            {
+                Console.WriteLine("Ошибка поиска рекламы");
+            }
         }
 
         public static int getItemDetail(int numc)
@@ -415,10 +431,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             return content;
         }
 
-        public static async Task<string> GetItemName(int numId, string outPut)
+        public static async Task<string> GetItemName(int numId)
         {
-            if (File.Exists($"{outPut}{numId}.txt"))
-                return File.ReadAllText($"{outPut}{numId}.txt");
+            if (File.Exists($"{output}{numId}.txt"))
+                return File.ReadAllText($"{output}{numId}.txt");
             int basket = 1;
 
             if (numId < baskets[0])
@@ -468,8 +484,12 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     if (token.Length > 0)
                     {
-                        File.Create($"{outPut}{numId}.txt").Close();
-                        File.WriteAllText($"{outPut}{numId}.txt", token);
+                        File.Create($"{output}{numId}.txt").Close();
+                        File.WriteAllText($"{output}{numId}.txt", token);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Cannot read item name: " + numId.ToString());
                     }
                     return token;
 
@@ -498,8 +518,6 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     try
                     {
-                        string outPut = $"{Directory.GetCurrentDirectory()}/";
-
                         await update(data.apiKey, null, data.stocksData, "stocks");
                         await update(data.apiKey, ordersUpd, data.ordersData, "orders", "&flag=0");
 
@@ -509,17 +527,17 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             OrdersData.Order order = ord as OrdersData.Order;
                             order.count = WbBaseManager.getItemDetail(order.nmId);
 
-                            if (!File.Exists($"{outPut}{order.nmId}.jpeg"))
+                            if (!File.Exists($"{output}{order.nmId}.jpeg"))
                             {
-                                getImage(order.nmId, outPut);
-                                await GetItemName(order.nmId, outPut);
+                                getImage(order.nmId);
+                                await GetItemName(order.nmId);
                             }
 
                             string content = "\n";
                             content += $"{data.Smile} {data.Name}\n";
                             content += $"_{order.date}_\n\n";
-                            content += $"🆔 ID товара: {order.nmId}\n";
-                            content += $"🏷 {order.brand} | {order.supplierArticle}\n\n";
+                            content += $"🆔 ID товара: '{order.nmId}'\n";
+                            content += $"🏷 {order.brand} | [{order.supplierArticle}](https://www.wildberries.ru/catalog/{order.nmId}/detail.aspx)\n\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
                             content += $"🌐 {order.warehouseName} → {order.oblast}\n";
                             if (!order.isCancel)
@@ -532,18 +550,21 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             data.MessageRest();
                             data.dailyOrders.Add(order.odid);
 
-                            using (var fs = new FileStream($"{outPut}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
+                            using (var fs = new FileStream($"{output}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
                             {
+                                InputOnlineFile file = new InputOnlineFile(fs, "photo");
+
                                 foreach (long reciver in data.recivers)
                                 {
-                                    await bot.SendMessage(reciver, content, fs);
+                                    await bot.SendMessage(reciver, content, file);
                                 }
+                                fs.Close();
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Не удалось получить данные по аккаунту: {data.apiKey}. {ex.Message}");
+                        Console.WriteLine($"Cannot read account data: {data.apiKey}. {ex.Message}");
                         continue;
                     }
                 }
@@ -760,8 +781,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
                     content += $"*{curOrd.itemName}*\n";
-                    content += $"🆔 ID товара: {curOrd.nmId}\n";
-                    content += $"🏷 {curOrd.brand} | {curOrd.supplierArticle}\n";
+                    content += $"🆔 ID товара: '{curOrd.nmId}'\n";
+                    content += $"🏷 {curOrd.brand} | [{curOrd.supplierArticle}](https://www.wildberries.ru/catalog/{curOrd.nmId}/detail.aspx)\n";
                     content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
                     content += $"🚛 Заказы: {ordCount}\n";
                     content += $"🚚 Возвраты: {backCount}\n";

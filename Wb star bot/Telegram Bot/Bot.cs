@@ -139,17 +139,17 @@ namespace Wb_star_bot.Telegram_Bot
             return await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
         }
 
-        public async Task SendMessage(long senderId, string text, FileStream stream, IReplyMarkup? markup = null)
+        public async Task SendMessage(long senderId, string text, InputOnlineFile file, IReplyMarkup? markup = null)
         {
             if (text.Length > MaxMessageLenght)
                 text = text.Remove(MaxMessageLenght);
 
+            if (text.Length == 0) return;
+
             try
             {
-                if (stream != null)
+                if (file != null)
                 {
-
-                    InputOnlineFile file = new InputOnlineFile(stream, "photo");
                     if (file != null && file.Content != null)
                         await botClient.SendPhotoAsync(senderId, file, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
                     else
@@ -158,7 +158,13 @@ namespace Wb_star_bot.Telegram_Bot
             }
             catch(Exception e)
             {
-                await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                try
+                {
+                    await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                }catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
 
@@ -246,6 +252,21 @@ namespace Wb_star_bot.Telegram_Bot
             }
         }
 
+        public async Task QuitMessage()
+        {
+            foreach(long reciver in clientBook.Keys)
+            {
+                string byeMessage = "⚠️ Работа бота временно приостановлена администратором. Это не случайное выключение и скорее всего, бот вскором времени будет запущен снова!\n\n🔑 Ваши апи ключи:";
+
+                foreach(string data in clientBook[reciver].clientDatas)
+                {
+                    byeMessage += $"{clientDatas[data].Name}: '{clientDatas[data].apiKey}'\n";
+                }
+
+                await SendMessage(reciver, byeMessage);
+            }
+        }
+
         public async Task MessageHandler(Message update)
         {
             
@@ -314,6 +335,7 @@ namespace Wb_star_bot.Telegram_Bot
 
         public async void SendInvoce(long chatId, string apikey, string name, int summ)
         {
+            if(summ >= 60)
             await botClient.SendInvoiceAsync(chatId, "Пополнение аккаунта", $"Оплата личного счета {name}.", apikey, "390540012:LIVE:26970", "RUB", new LabeledPrice[] { new LabeledPrice("Оплатить", summ * 100) });
         }
         public async void MessageCallback(Bot bot, ClientData[]? client, Message? mes)
@@ -350,8 +372,13 @@ namespace Wb_star_bot.Telegram_Bot
                     await SendMessage(senderId, answerList[answer.data_already_has_reciver]);
                     return;
                 }
+                int sml = clientBook[senderId].clientDatas.Count;
 
                 clientDatas[message].recivers.Add(senderId);
+
+                if(smiles.Length > sml)
+                clientDatas[message].Smile = smiles[sml];
+
                 await SendMessage(senderId, answerList[answer.data_successfuly]);
 
                 if (!clientDatas[message].active)

@@ -9,6 +9,9 @@ using System.Net;
 
 string token = "5719447713:AAF-7w3jQQnvs2v9ZjzJ-5nEL61fzYD0n8M";
 
+Console.WriteLine($"Current bot files directory: {WbBaseManager.output}");
+
+
 Bot bot = new Bot(token, new Dictionary<string, BotPage[]>
 {
     {"/pay", new BotPage[]{
@@ -48,7 +51,7 @@ while (true)
             bot.consoleLog[1] = !bot.consoleLog[1];
             Console.WriteLine($"Querry datas: {(bot.consoleLog[1] ? "on" : "off")}");
             break;
-        case "end": return;
+        case "end": await bot.QuitMessage(); return;
 
     }
 }
