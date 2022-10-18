@@ -536,7 +536,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             string content = "\n";
                             content += $"{data.Smile} {data.Name}\n";
                             content += $"_{order.date}_\n\n";
-                            content += $"🆔 ID товара: '{order.nmId}'\n";
+                            content += $"🆔 ID товара: `{order.nmId}`\n";
                             content += $"🏷 {order.brand} | [{order.supplierArticle}](https://www.wildberries.ru/catalog/{order.nmId}/detail.aspx)\n\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
                             content += $"🌐 {order.warehouseName} → {order.oblast}\n";
@@ -781,7 +781,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
                     content += $"*{curOrd.itemName}*\n";
-                    content += $"🆔 ID товара: '{curOrd.nmId}'\n";
+                    content += $"🆔 ID товара: `{curOrd.nmId}`\n";
                     content += $"🏷 {curOrd.brand} | [{curOrd.supplierArticle}](https://www.wildberries.ru/catalog/{curOrd.nmId}/detail.aspx)\n";
                     content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
                     content += $"🚛 Заказы: {ordCount}\n";
