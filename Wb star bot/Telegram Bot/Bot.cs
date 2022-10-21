@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Wb_star_bot.Wb_handler;
 using Wb_star_bot.Clients;
 
+using File = System.IO.File;
+
 namespace Wb_star_bot.Telegram_Bot
 {
     internal delegate string CommandCallback(Bot bot, ClientData[]? client);
@@ -83,6 +85,21 @@ namespace Wb_star_bot.Telegram_Bot
             new Thread(new ParameterizedThreadStart(WbBaseManager.DailyMessage)).Start(this);
         }
 
+        public static void ReciveError(string error)
+        {
+            try
+            {
+                Console.WriteLine(error);
+
+                string link = $"{Directory.GetCurrentDirectory()}/errors.txt";
+
+                File.AppendAllText(link, error);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
         public async Task ReciveHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             try
@@ -122,7 +139,7 @@ namespace Wb_star_bot.Telegram_Bot
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Bot.ReciveError(e.Message);
             }
         }
 
@@ -136,7 +153,17 @@ namespace Wb_star_bot.Telegram_Bot
         {
             if (text.Length > MaxMessageLenght)
                 text = text.Remove(MaxMessageLenght);
-            return await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+
+            try
+            {
+                return await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+            }
+            catch(Exception e)
+            {
+                ReciveError(e.Message);
+
+                return await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup);
+            }
         }
 
         public async Task SendMessage(long senderId, string text, InputOnlineFile file, IReplyMarkup? markup = null)
@@ -160,10 +187,12 @@ namespace Wb_star_bot.Telegram_Bot
             {
                 try
                 {
-                    await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
-                }catch(Exception ex)
+                    await botClient.SendTextMessageAsync(senderId, text, replyMarkup: markup);
+                    Bot.ReciveError(e + ": " + text);
+                }
+                catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Bot.ReciveError(ex + ": " + text);
                 }
             }
         }
@@ -230,7 +259,7 @@ namespace Wb_star_bot.Telegram_Bot
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine(e);
+                    Bot.ReciveError(e.Message);
                     dlt();
                 }
 
@@ -246,7 +275,7 @@ namespace Wb_star_bot.Telegram_Bot
                         clientBook[senderId].currentPage = snd.Result.MessageId;
                     }catch(Exception e)
                     {
-                        Console.WriteLine(e);
+                        Bot.ReciveError(e.Message);
                     }
                 }
             }
@@ -256,14 +285,20 @@ namespace Wb_star_bot.Telegram_Bot
         {
             foreach(long reciver in clientBook.Keys)
             {
-                string byeMessage = "⚠️ Работа бота временно приостановлена администратором. Это не случайное выключение и скорее всего, бот вскором времени будет запущен снова!\n\n🔑 Ваши апи ключи:";
-
-                foreach(string data in clientBook[reciver].clientDatas)
+                try
                 {
-                    byeMessage += $"{clientDatas[data].Name}: '{clientDatas[data].apiKey}'\n";
-                }
+                    string byeMessage = "⚠️ Работа бота временно приостановлена администратором. Это не случайное выключение и скорее всего, бот вскором времени будет запущен снова!\n\n🔑 Ваши апи ключи:";
 
-                await SendMessage(reciver, byeMessage);
+                    foreach (string data in clientBook[reciver].clientDatas)
+                    {
+                        byeMessage += $"\n{clientDatas[data].Name} `{clientDatas[data].apiKey}`\n";
+                    }
+
+                    await SendMessage(reciver, byeMessage);
+                }catch(Exception e)
+                {
+                    ReciveError(e.Message);
+                }
             }
         }
 
@@ -355,7 +390,7 @@ namespace Wb_star_bot.Telegram_Bot
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    Bot.ReciveError(e.Message);
                     await SendMessage(senderId, answerList[answer.error_api]);
                     return;
                 }
@@ -421,7 +456,7 @@ namespace Wb_star_bot.Telegram_Bot
                     {
                         await SendMessage(senderId, answerList[answer.data_bad_request]);
                     }
-                    Console.WriteLine(ex.ToString());
+                    Bot.ReciveError(ex.ToString());
                     return;
                 }
 

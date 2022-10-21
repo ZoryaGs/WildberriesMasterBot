@@ -40,7 +40,7 @@ namespace Wb_star_bot.Wb_handler
 
         public delegate void onFinished();
 
-        public static string output => $"{Directory.GetCurrentDirectory()}/";
+        public static string output => $"{Directory.GetCurrentDirectory()}\\data\\";
 
         public static long[] baskets = new long[]
         {
@@ -198,7 +198,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                         }
                     }catch(Exception e)
                     {
-                        Console.WriteLine("Cannot save image: " + numId.ToString());
+                        Bot.ReciveError("Cannot save image: " + numId.ToString());
                     }
                 }
             }
@@ -292,7 +292,14 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 category += mes[i] + (i == mes.Length - 1 ? "" : " ");
             }
 
-            await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск рекламной позиции...").Result.MessageId, getCategoryItems(category, id));
+            try
+            {
+                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryItems(category, id), Telegram.Bot.Types.Enums.ParseMode.Markdown);
+            }
+            catch
+            {
+                Bot.ReciveError("Ошибка поска в категории: " + category);
+            }
         }
         public static async Task GetCategoryAdsCallback(Bot bot, ClientData[]? client, Message? message)
         {
@@ -301,11 +308,11 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 string mes = message.Text;
 
                 bot.clientBook[message.Chat.Id].messageCallback = null;
-                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryCpmList(mes));
+                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск рекламной позиции...").Result.MessageId, getCategoryCpmList(mes), Telegram.Bot.Types.Enums.ParseMode.Markdown);
             }
             catch
             {
-                Console.WriteLine("Ошибка поиска рекламы");
+                Bot.ReciveError("Ошибка поиска рекламы");
             }
         }
 
@@ -371,36 +378,46 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
         public static string getCategoryItems(string category, long nmId)
         {
-            int position = 1;
+            string msc = GetPos(-1029256, -102269, -2162196, -1257218);
+            string krs = GetPos(-1059500, -108082, -269701, 12358060);
+            string omsk = GetPos(-1221148, -140292, -1558108, -3902910);
 
-            for (int page = 0; page <= 50; page++)
+            string GetPos(int x, int y, int w, int z)
             {
-                // -1059500,-72639,-3826860,-5551775
-                //-1059500,0,-10000000,-1000000
-                //-1029256,-102269,-2162196,-1257786
-                string link = $"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest=-1029256,-102269,-2162196,-1257786&emp=0&lang=ru&locale=ru&page={page + 1}&pricemarginCoeff=1.0&reg=0&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}";
-                HttpContent client = new HttpClient().GetAsync(link).Result.Content;
-                JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
-                var token = data.GetValue("data")?.Value<JObject>()?.GetValue("products")?.Values<JObject>() ?? null;
-
-                if (token != null)
+                for (int page = 0; page <= 50; page++)
                 {
-                    foreach (JObject obj in token)
-                    {
-                        if (nmId == obj.GetValue("id").Value<long>())
-                        {
-                            return $"👀 Позиция товара в поиске: {page + 1} страница, {position - page * 100} карточка.";
-                        }
+                    int position = 1;
 
-                        position++;
+                    // -1059500,-72639,-3826860,-5551775
+                    //-1059500,0,-10000000,-1000000
+                    //-1029256,-102269,-2162196,-1257786
+                    string link = $"https://search.wb.ru/exactmatch/ru/common/v4/search?appType=1&dest={x},{y},{w},{z}&emp=0&lang=ru&locale=ru&page={page + 1}&pricemarginCoeff=1.0&reg=0&resultset=catalog&sort=popular&suppressSpellcheck=false&query={category}";
+                    HttpContent client = new HttpClient().GetAsync(link).Result.Content;
+                    JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
+                    var token = data.GetValue("data")?.Value<JObject>()?.GetValue("products")?.Values<JObject>() ?? null;
+
+                    if (token != null)
+                    {
+                        foreach (JObject obj in token)
+                        {
+                            if (nmId == obj.GetValue("id").Value<long>())
+                            {
+                                return $"{page + 1} страница, {position} карточка";
+                            }
+
+                            position++;
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
-                else
-                {
-                    break;
-                }
+                return "не ранжируется на первых 50 стр.";
             }
-            return "😢 Ваш товар не ранжируется на первых 50 страницах.";
+
+            return $"👀 Позиция товара в поиске:\n\nℹ️ Запрос: `{nmId} {category}`\n\nМосква: {msc}\nКраснодар: {krs}\nОмск: {omsk}";
+
         }
 
         public static string getCategoryCpmList(string category)
@@ -484,8 +501,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     if (token.Length > 0)
                     {
-                        File.Create($"{output}{numId}.txt").Close();
-                        File.WriteAllText($"{output}{numId}.txt", token);
+                        File.WriteAllText($"{output}{numId}.txt", token.Replace("*","").Replace("_","").Replace("`",""));
                     }
                     else
                     {
@@ -535,7 +551,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                             string content = "\n";
                             content += $"{data.Smile} {data.Name}\n";
-                            content += $"_{order.date}_\n\n";
+                            content += $"_{order.lastChangeDate}_\n\n";
                             content += $"🆔 ID товара: `{order.nmId}`\n";
                             content += $"🏷 {order.brand} | [{order.supplierArticle}](https://www.wildberries.ru/catalog/{order.nmId}/detail.aspx)\n\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
@@ -564,7 +580,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Cannot read account data: {data.apiKey}. {ex.Message}");
+                        Bot.ReciveError($"Cannot read account data: {data.apiKey}. {ex.Message}");
                         continue;
                     }
                 }
@@ -605,7 +621,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                 Dictionary<ulong, List<OrdersData.Order>> ordersDictionary = new Dictionary<ulong, List<OrdersData.Order>>();
                                 SortedList<uint, int> endingOrders = new SortedList<uint, int>();
 
-                                foreach (uint odid in data.dailyOrders)
+                                foreach (ulong odid in data.dailyOrders)
                                 {
                                     OrdersData.Order order = data.ordersData.orders[odid];
 
@@ -683,7 +699,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     content += $"💰 Выручка: {sm}\n\n";
                                 }
 
-                                content += $"_Дата последнего заказа: {data.ordersData.orders[data.dailyOrders[^1]].date}";
+                                content += $"Дата последнего заказа: {data.ordersData.orders[data.dailyOrders[^1]].date}";
 
                                 data.dailyOrders.Clear();
                                 foreach (long id in data.recivers)
@@ -698,7 +714,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        Bot.ReciveError(e.Message);
                     }
                 }
             }
@@ -823,7 +839,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 return (content, buttons.Count > 0 ? buttons.ToArray() : null);
             }catch(Exception e)
             {
-                Console.WriteLine(e);
+                Bot.ReciveError(e.Message);
             }
             return ("Системная ошибка. Мы уже работаем над ее исправлением", null);
         }

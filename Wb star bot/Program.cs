@@ -9,6 +9,11 @@ using System.Net;
 
 string token = "5719447713:AAF-7w3jQQnvs2v9ZjzJ-5nEL61fzYD0n8M";
 
+if (!Directory.Exists(WbBaseManager.output))
+{
+    Directory.CreateDirectory(WbBaseManager.output);
+}
+
 Console.WriteLine($"Current bot files directory: {WbBaseManager.output}");
 
 
