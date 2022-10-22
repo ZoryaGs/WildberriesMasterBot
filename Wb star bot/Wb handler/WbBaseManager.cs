@@ -568,10 +568,12 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                             using (var fs = new FileStream($"{output}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
                             {
-                                InputOnlineFile file = new InputOnlineFile(fs, "photo");
-
+                                
                                 foreach (long reciver in data.recivers)
                                 {
+                                    fs.Seek(0, SeekOrigin.Begin);
+                                    InputOnlineFile file = new InputOnlineFile(fs);
+
                                     await bot.SendMessage(reciver, content, file);
                                 }
                                 fs.Close();
@@ -600,7 +602,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 Console.WriteLine("Daily message wait time: " + waitTime.ToString());
 
                 Thread.Sleep(waitTime);
-                waitTime = new TimeSpan(0, 1, 0, 0);
+                waitTime = new TimeSpan(1, 0, 0, 0);
                 foreach (ClientData data in bot.clientDatas.Values)
                 {
                     if (data.apiKey == null || data.balance == 0 || !data.active)
@@ -654,7 +656,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                                 foreach (KeyValuePair<ulong, List<OrdersData.Order>> pop in popular)
                                 {
-                                    content += $"\n📘 Товар:{pop.Value[0].itemName}";
+                                    content += $"\n📘 Товар:{pop.Value[0].itemName}\n";
                                     int c = 0;
                                     int b = 0;
                                     float sm = 0;
@@ -669,7 +671,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"\n📦 Остаток:{pop.Value[0].count}";
+                                    content += $"📦 Остаток:{pop.Value[0].count}\n";
                                     content += $"💰 Выручка: {sm}\n";
 
 
@@ -680,7 +682,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                                 foreach (KeyValuePair<ulong, List<OrdersData.Order>> end in ending)
                                 {
-                                    content += $"\n📘 Товар:{end.Value[0].itemName}";
+                                    content += $"\n📘 Товар:{end.Value[0].itemName}\n";
                                     int c = 0;
                                     int b = 0;
                                     float sm = 0;
@@ -695,8 +697,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"\n📦 Остаток:{end.Value[0].count}";
-                                    content += $"💰 Выручка: {sm}\n\n";
+                                    content += $"📦 Остаток:{end.Value[0].count}\n";
+                                    content += $"💰 Выручка: {sm}\n";
                                 }
 
                                 content += $"Дата последнего заказа: {data.ordersData.orders[data.dailyOrders[^1]].date}";

@@ -435,8 +435,24 @@ namespace Wb_star_bot.Telegram_Bot
                 try
                 {
                     await WbBaseManager.update(message, null, newClient.stocksData, "stocks");
-                    await WbBaseManager.update(message, null, newClient.ordersData, "orders", "&flag=0", GetAccInfo);
+                    await WbBaseManager.update(message, OrdAdd, newClient.ordersData, "orders", "&flag=0", GetAccInfo);
 
+
+                    void OrdAdd(object data, bool cont)
+                    {
+                        try
+                        {
+                            OrdersData.Order ord = (OrdersData.Order)data;
+
+                            if (ord.date.Day == DateTime.Now.Day)
+                            {
+                                newClient.dailyOrders.Add(ord.odid);
+                            }
+                        }catch(Exception e)
+                        {
+                            ReciveError(e.Message);
+                        }
+                    }
 
                     void GetAccInfo()
                     {

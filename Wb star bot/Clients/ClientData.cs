@@ -10,10 +10,11 @@ namespace Wb_star_bot.Clients
     {
         public const int standartTarifCost = 190;
         public const int premiumTarifCost = 490;
-        public string Name { get; set; }
+        public string Name { get => name; set { name = value.Replace("_","").Replace("`", "").Replace("*",""); } }
         public string Smile { get => active ? smile : "❌"; set { smile = value; } }
-        private string smile = "";
 
+        private string smile = "";
+        private string name = "";
 
         public string? apiKey = null;
         public string? apiSecret = null;
