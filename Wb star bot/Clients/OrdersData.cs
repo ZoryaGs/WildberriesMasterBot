@@ -56,13 +56,15 @@ namespace Wb_star_bot.Clients
                                 break;
                             }
                         }
+                        onUpdate?.Invoke(order, true);
                     }
                     else
                     {
                         uniqOrders.Add(order.nmId, new List<ulong>() { order.odid });
+                        onUpdate?.Invoke(order, false);
+
                     }
 
-                    onUpdate?.Invoke(order, false);
                 }
 
             }

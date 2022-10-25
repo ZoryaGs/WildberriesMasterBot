@@ -318,46 +318,54 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
         public static int getItemDetail(int numc)
         {
-            string link = $"https://card.wb.ru/cards/detail?pricemarginCoeff=1.0&appType=1&locale=ru&lang=ru&curr=rub&dest=-1059500,-72639,-3826860,-5551776&nm={numc}";
-            HttpContent client = new HttpClient().GetAsync(link).Result.Content;
-            JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
-            //  JObject deliveryDetail = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
-
-            var token = data.GetValue("data")?.Value<JObject>()?.GetValue("products")?.Values<JObject>() ?? null;
-
-            if (token != null)
+            try
             {
-                foreach (JObject obj in token)
+                string link = $"https://card.wb.ru/cards/detail?pricemarginCoeff=1.0&appType=1&locale=ru&lang=ru&curr=rub&dest=-1059500,-72639,-3826860,-5551776&nm={numc}";
+                HttpContent client = new HttpClient().GetAsync(link).Result.Content;
+                JObject data = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
+                //  JObject deliveryDetail = JObject.Parse(new StreamReader(client.ReadAsStream()).ReadToEnd());
+
+                var token = data.GetValue("data")?.Value<JObject>()?.GetValue("products")?.Values<JObject>() ?? null;
+
+                if (token != null)
                 {
-                    int count = 0;
-
-                    var sizes = obj?.GetValue("sizes")?.Values<JObject>() ?? null;
-
-                    if (sizes != null)
+                    foreach (JObject obj in token)
                     {
-                        foreach (var size in sizes)
+                        int count = 0;
+
+                        var sizes = obj?.GetValue("sizes")?.Values<JObject>() ?? null;
+
+                        if (sizes != null)
                         {
-                            returnCount(size.GetValue("stocks")?.Values<JObject>() ?? null);
-                        }
-                    }
-                    else
-                    {
-                        returnCount(obj?.GetValue("stocks")?.Values<JObject>() ?? null);
-                    }
-
-                    void returnCount(IEnumerable<JObject?> stocks)
-                    {
-                        if (stocks != null)
-                        {
-                            foreach (JObject stock in stocks)
+                            foreach (var size in sizes)
                             {
-                                count += stock.GetValue("qty").Value<int>();
+                                returnCount(size.GetValue("stocks")?.Values<JObject>() ?? null);
                             }
                         }
-                    }
-                    return count;
+                        else
+                        {
+                            returnCount(obj?.GetValue("stocks")?.Values<JObject>() ?? null);
+                        }
 
+                        void returnCount(IEnumerable<JObject?> stocks)
+                        {
+                            if (stocks != null)
+                            {
+                                foreach (JObject stock in stocks)
+                                {
+                                    count += stock.GetValue("qty").Value<int>();
+                                }
+                            }
+                        }
+                        return count;
+
+                    }
                 }
+            }
+            catch(Exception e)
+            {
+                Bot.ReciveError(e.Message);
+                return -1;
             }
             return 0;
         }
@@ -671,7 +679,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"📦 Остаток:{pop.Value[0].count}\n";
+                                    content += $"📦 Остаток:{pop.Value[^1].count}\n";
                                     content += $"💰 Выручка: {sm}\n";
 
 
@@ -682,7 +690,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                                 foreach (KeyValuePair<ulong, List<OrdersData.Order>> end in ending)
                                 {
-                                    content += $"\n📘 Товар:{end.Value[0].itemName}\n";
+                                    content += $"\n📘 Товар:{end.Value[^1].itemName}\n";
                                     int c = 0;
                                     int b = 0;
                                     float sm = 0;
@@ -697,7 +705,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"📦 Остаток:{end.Value[0].count}\n";
+                                    content += $"📦 Остаток:{end.Value[^1].count}\n";
                                     content += $"💰 Выручка: {sm}\n";
                                 }
 

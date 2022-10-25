@@ -459,6 +459,11 @@ namespace Wb_star_bot.Telegram_Bot
                         if (newClient.ordersData.orders.Count > 0)
                         {
                             newClient.Name = WbBaseManager.getAccountInfo(newClient.ordersData.orders.ElementAt(0).Value.nmId);
+
+                            foreach(int nm in newClient.ordersData.uniqOrders.Keys)
+                            {
+                                newClient.ordersData.orders[newClient.ordersData.uniqOrders[nm][^1]].count = WbBaseManager.getItemDetail(nm);
+                            }
                         }
                     }
                 }
