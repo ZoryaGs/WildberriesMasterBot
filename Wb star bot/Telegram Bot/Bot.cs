@@ -440,6 +440,7 @@ namespace Wb_star_bot.Telegram_Bot
 
                     void OrdAdd(object data, bool cont)
                     {
+                        if(!cont){
                         try
                         {
                             OrdersData.Order ord = (OrdersData.Order)data;
@@ -452,6 +453,7 @@ namespace Wb_star_bot.Telegram_Bot
                         {
                             ReciveError(e.Message);
                         }
+                        }
                     }
 
                     void GetAccInfo()
@@ -462,7 +464,8 @@ namespace Wb_star_bot.Telegram_Bot
 
                             foreach(int nm in newClient.ordersData.uniqOrders.Keys)
                             {
-                                newClient.ordersData.orders[newClient.ordersData.uniqOrders[nm][^1]].count = WbBaseManager.getItemDetail(nm);
+                                newClient.ordersData.stockCount.TryAdd(nm,0);
+                                newClient.ordersData.stockCount[nm] = WbBaseManager.getItemDetail(nm);
                             }
                         }
                     }

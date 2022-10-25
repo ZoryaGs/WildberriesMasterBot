@@ -1,107 +1,126 @@
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\System.Drawing.Common.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\myspr\source\repos\Wb star bot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\System.Drawing.Common.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
-C:\Users\Я\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\System.Drawing.Common.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
-C:\Users\Тимур\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
-C:\Users\myspr\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\SixLabors.ImageSharp.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.exe
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.deps.json
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.runtimeconfig.json
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Wb star bot.pdb
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\SixLabors.ImageSharp.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\bin\Debug\net6.0\Telegram.Bot.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.AssemblyReference.cache
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfoInputs.cache
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.AssemblyInfo.cs
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CoreCompileInputs.cache
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.csproj.CopyComplete
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\refint\Wb star bot.dll
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.pdb
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\Wb star bot.genruntimeconfig.cache
-C:\Users\Zorya\Documents\GitHub\WildberriesMasterBot\Wb star bot\obj\Debug\net6.0\ref\Wb star bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Wb star bot.exe
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/System.Drawing.Common.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+C:/Users/myspr/source/repos/Wb star bot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.exe
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/System.Drawing.Common.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+C:/Users/Я/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.exe
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.exe
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/System.Drawing.Common.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+C:/Users/Тимур/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll
+C:/Users/myspr/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/SixLabors.ImageSharp.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.exe
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/SixLabors.ImageSharp.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+C:/Users/Zorya/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.deps.json
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.runtimeconfig.json
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Wb star bot.pdb
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Newtonsoft.Json.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/SixLabors.ImageSharp.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/bin/Debug/net6.0/Telegram.Bot.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.AssemblyReference.cache
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.GeneratedMSBuildEditorConfig.editorconfig
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfoInputs.cache
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.AssemblyInfo.cs
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CoreCompileInputs.cache
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.csproj.CopyComplete
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/refint/Wb star bot.dll
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.pdb
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/Wb star bot.genruntimeconfig.cache
+/Users/zoryagroup/Documents/GitHub/WildberriesMasterBot/Wb star bot/obj/Debug/net6.0/ref/Wb star bot.dll

@@ -40,7 +40,7 @@ namespace Wb_star_bot.Wb_handler
 
         public delegate void onFinished();
 
-        public static string output => $"{Directory.GetCurrentDirectory()}\\data\\";
+        public static string output => $"{Directory.GetCurrentDirectory()}/data/";
 
         public static long[] baskets = new long[]
         {
@@ -548,8 +548,11 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                         async void ordersUpd(object ord, bool c)
                         {
+
                             OrdersData.Order order = ord as OrdersData.Order;
-                            order.count = WbBaseManager.getItemDetail(order.nmId);
+                            
+                            data.ordersData.stockCount.TryAdd(order.nmId, 0);
+                            data.ordersData.stockCount[order.nmId] = WbBaseManager.getItemDetail(order.nmId);
 
                             if (!File.Exists($"{output}{order.nmId}.jpeg"))
                             {
@@ -568,10 +571,12 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                 content += $"💵 Выручка: {order.price}\n";
 
                             content += $"{(order.isCancel ? "🚚" : "🚛")} Статус: {(order.isCancel ? "Возврат" : "В пути")}\n";
-                            content += $"\n📦 Остаток:{order.count} ";
+                            content += $"\n📦 Остаток:{data.ordersData.stockCount[order.nmId]} ";
 
                             data.monthMessages++;
                             data.MessageRest();
+
+                            if(!c)
                             data.dailyOrders.Add(order.odid);
 
                             using (var fs = new FileStream($"{output}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
@@ -628,17 +633,16 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                 uint ordersCount = 0;
                                 uint backCount = 0;
                                 int income = 0;
-                                Dictionary<ulong, List<OrdersData.Order>> ordersDictionary = new Dictionary<ulong, List<OrdersData.Order>>();
-                                SortedList<uint, int> endingOrders = new SortedList<uint, int>();
+                                Dictionary<int, List<OrdersData.Order>> ordersDictionary = new Dictionary<int, List<OrdersData.Order>>();
 
                                 foreach (ulong odid in data.dailyOrders)
                                 {
                                     OrdersData.Order order = data.ordersData.orders[odid];
 
-                                    if (!ordersDictionary.ContainsKey(odid))
-                                        ordersDictionary.Add(odid, new List<OrdersData.Order>());
+                                    if (!ordersDictionary.ContainsKey(order.nmId))
+                                        ordersDictionary.Add(order.nmId, new List<OrdersData.Order>());
 
-                                    ordersDictionary[odid].Add(order);
+                                    ordersDictionary[order.nmId].Add(order);
 
                                     if (order.isCancel)
                                     {
@@ -660,9 +664,9 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                                 content += "Ⓜ️ *Самые популярные товары:*\n";
 
-                                KeyValuePair<ulong, List<OrdersData.Order>>[] popular = ordersDictionary.OrderBy(x => x.Value.Count).Take(ordersDictionary.Count >= 2 ? 2 : ordersDictionary.Count).ToArray();
+                                KeyValuePair<int, List<OrdersData.Order>>[] popular = ordersDictionary.OrderBy(x => x.Value.Count).Take(ordersDictionary.Count >= 2 ? 2 : ordersDictionary.Count).ToArray();
 
-                                foreach (KeyValuePair<ulong, List<OrdersData.Order>> pop in popular)
+                                foreach (KeyValuePair<int, List<OrdersData.Order>> pop in popular)
                                 {
                                     content += $"\n📘 Товар:{pop.Value[0].itemName}\n";
                                     int c = 0;
@@ -679,22 +683,23 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"📦 Остаток:{pop.Value[^1].count}\n";
+                                    content += $"📦 Остаток:{data.ordersData.stockCount[pop.Key]}\n";
                                     content += $"💰 Выручка: {sm}\n";
 
 
                                 }
-                                KeyValuePair<ulong, List<OrdersData.Order>>[] ending = ordersDictionary.OrderBy(x => x.Value[0].count).Take(ordersDictionary.Count >= 2 ? 2 : ordersDictionary.Count).ToArray();
+                                KeyValuePair<int, int>[] ending = data.ordersData.stockCount.OrderBy(x => x.Value).Take(data.ordersData.stockCount.Count >= 2 ? 2 : data.ordersData.stockCount.Count).ToArray();
 
                                 content += "\n⚠️ *Товары на исходе:*\n";
 
-                                foreach (KeyValuePair<ulong, List<OrdersData.Order>> end in ending)
+                                foreach (KeyValuePair<int, int> end in ending)
                                 {
-                                    content += $"\n📘 Товар:{end.Value[^1].itemName}\n";
+                                    OrdersData.Order cr = data.ordersData.orders[data.ordersData.uniqOrders[end.Key][0]];
+                                    content += $"\n📘 Товар:{cr.itemName}\n";
                                     int c = 0;
                                     int b = 0;
                                     float sm = 0;
-                                    foreach (OrdersData.Order ord in end.Value)
+                                    foreach (OrdersData.Order ord in ordersDictionary[end.Key])
                                     {
                                         if (ord.isCancel)
                                             b++;
@@ -705,7 +710,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     }
                                     content += $"🚛 Заказы: {c}\n";
                                     content += $"🚚 Возвраты: {b}\n";
-                                    content += $"📦 Остаток:{end.Value[^1].count}\n";
+                                    content += $"📦 Остаток:{end.Value}\n";
                                     content += $"💰 Выручка: {sm}\n";
                                 }
 
@@ -812,7 +817,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
                     content += $"🚛 Заказы: {ordCount}\n";
                     content += $"🚚 Возвраты: {backCount}\n";
-                    content += $"📦 Остаток: {curOrd.count}\n";
+                    content += $"📦 Остаток: {handleClient.ordersData.stockCount[curOrd.nmId]}\n";
                     content += $"💰 Выручка: {income}\n\n";
                 }
 

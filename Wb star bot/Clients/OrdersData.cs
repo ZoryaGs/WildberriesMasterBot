@@ -28,6 +28,7 @@ namespace Wb_star_bot.Clients
         public Dictionary<ulong, Order> orders = new Dictionary<ulong, Order>();
         public Dictionary<int, List<ulong>> uniqOrders = new Dictionary<int, List<ulong>>();
 
+        public Dictionary<int, int> stockCount = new Dictionary<int, int>();
 
         public void Update(string content, onUpdate? onUpdate)
         {
@@ -56,7 +57,7 @@ namespace Wb_star_bot.Clients
                                 break;
                             }
                         }
-                        onUpdate?.Invoke(order, true);
+                        onUpdate?.Invoke(order, false);
                     }
                     else
                     {
@@ -92,9 +93,6 @@ namespace Wb_star_bot.Clients
             public string category;
             public bool isCancel;
             public string gNumber;
-
-            [NonSerialized]
-            public int count;
 
             public int price
             {
