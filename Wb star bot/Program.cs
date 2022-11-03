@@ -9,10 +9,10 @@ string token = "5719447713:AAF-7w3jQQnvs2v9ZjzJ-5nEL61fzYD0n8M";
 
 if (!Directory.Exists(WbBaseManager.output))
 {
-    Directory.CreateDirectory(WbBaseManager.output);
+    Directory.CreateDirectory(WbBaseManager.dataDirectory);
 }
 
-Console.WriteLine($"Current bot files directory: {WbBaseManager.output}");
+Console.WriteLine($"Current bot files directory: {WbBaseManager.dataDirectory}");
 
 
 Bot bot = new Bot(token, new Dictionary<string, BotPage[]>
@@ -28,6 +28,9 @@ Bot bot = new Bot(token, new Dictionary<string, BotPage[]>
     }},
     {"/products",new BotPage[]{
         new BotPage(0, WbBaseManager.ClientDataOrders),
+    }},
+    {"/label", new BotPage[]{
+        new BotPage(0, WbBaseManager.ProductInfo),
     }},
     {"/search", new BotPage[]{
         new BotPage(0, WbBaseManager.GetProductPosition),
@@ -53,6 +56,10 @@ while (true)
         case "echo 1":
             bot.consoleLog[1] = !bot.consoleLog[1];
             Console.WriteLine($"Querry datas: {(bot.consoleLog[1] ? "on" : "off")}");
+            break;
+        case "echo 2":
+            WbBaseManager.showUpdMessages= !WbBaseManager.showUpdMessages;
+            Console.WriteLine($"Uupdating datas: {(WbBaseManager.showUpdMessages ? "on" : "off")}");
             break;
         case "end": await bot.QuitMessage(); return;
 

@@ -40,7 +40,9 @@ namespace Wb_star_bot.Wb_handler
 
         public delegate void onFinished();
 
-        public static string output => $"{Directory.GetCurrentDirectory()}/data/";
+        public static string output => $"{dataDirectory}/";
+        public static string dataDirectory => $"{Directory.GetCurrentDirectory()}/data";
+
 
         public static long[] baskets = new long[]
         {
@@ -128,6 +130,10 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             DateTime Msc = data.lastUpdate;
             string date = $"{Msc.Year}-{Msc.Month}-{Msc.Day}T{Msc.Hour}:{Msc.Minute}:{Msc.Second}";
             string url = $"{baseUrl}{req}?dateFrom={date}{addArg}&key={apiKey}";
+
+            if (showUpdMessages)
+                Console.WriteLine(url);
+
             try
             {
                 string answer = new StreamReader(WebRequest.Create(url).GetResponse().GetResponseStream()).ReadToEnd();
@@ -196,7 +202,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                         {
                             img.SaveAsJpeg($"{output}{numId}.jpeg");
                         }
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Bot.ReciveError("Cannot save image: " + numId.ToString());
                     }
@@ -281,7 +288,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             long id = 0;
             bot.clientBook[message.Chat.Id].messageCallback = null;
 
-            if (mes.Length < 2 || !long.TryParse(mes[0], out id)){
+            if (mes.Length < 2 || !long.TryParse(mes[0], out id))
+            {
                 await bot.SendMessage(message.Chat.Id, "❌ Неверный поисковой запрос!");
                 return;
             }
@@ -294,7 +302,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
             try
             {
-                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, getCategoryItems(category, id), Telegram.Bot.Types.Enums.ParseMode.Markdown);
+                await bot.botClient.EditMessageTextAsync(message.Chat.Id, bot.botClient.SendTextMessageAsync(message.Chat.Id, "👀 Идет поиск позиции товара...").Result.MessageId, await getCategoryItems(category, id), Telegram.Bot.Types.Enums.ParseMode.Markdown);
             }
             catch
             {
@@ -362,7 +370,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Bot.ReciveError(e.Message);
                 return -1;
@@ -384,13 +392,13 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             return new StreamReader(response.Content.ReadAsStream()).ReadToEnd();
         }
 
-        public static string getCategoryItems(string category, long nmId)
+        public static async Task<string> getCategoryItems(string category, long nmId)
         {
-            string msc = GetPos(-1029256, -102269, -2162196, -1257218);
-            string krs = GetPos(-1059500, -108082, -269701, 12358060);
-            string omsk = GetPos(-1221148, -140292, -1558108, -3902910);
+            Task<string> msc = GetPos(-1029256, -102269, -2162196, -1257218);
+            Task<string> krs = GetPos(-1059500, -108082, -269701, 12358060);
+            Task<string> omsk = GetPos(-1221148, -140292, -1558108, -3902910);
 
-            string GetPos(int x, int y, int w, int z)
+            async Task<string> GetPos(int x, int y, int w, int z)
             {
                 for (int page = 0; page <= 50; page++)
                 {
@@ -423,8 +431,11 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 }
                 return "не ранжируется на первых 50 стр.";
             }
+            await msc;
+            await krs;
+            await omsk;
 
-            return $"👀 Позиция товара в поиске:\n\nℹ️ Запрос: `{nmId} {category}`\n\nМосква: {msc}\nКраснодар: {krs}\nОмск: {omsk}";
+            return $"👀 Позиция товара в поиске:\n\nℹ️ Запрос: `{nmId} {category}`\n\nМосква: {msc.Result}\nКраснодар: {krs.Result}\nОмск: {omsk.Result}";
 
         }
 
@@ -509,7 +520,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
 
                     if (token.Length > 0)
                     {
-                        File.WriteAllText($"{output}{numId}.txt", token.Replace("*","").Replace("_","").Replace("`",""));
+                        File.WriteAllText($"{output}{numId}.txt", token.Replace("*", "").Replace("_", "").Replace("`", ""));
                     }
                     else
                     {
@@ -528,6 +539,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
             return "Без названия";
         }
 
+        public static bool showUpdMessages = false;
         public static async void ClientDataUpdating(object arg)
         {
             Bot bot = arg as Bot;
@@ -550,7 +562,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                         {
 
                             OrdersData.Order order = ord as OrdersData.Order;
-                            
+
                             data.ordersData.stockCount.TryAdd(order.nmId, 0);
                             data.ordersData.stockCount[order.nmId] = WbBaseManager.getItemDetail(order.nmId);
 
@@ -564,7 +576,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             content += $"{data.Smile} {data.Name}\n";
                             content += $"_{order.lastChangeDate}_\n\n";
                             content += $"🆔 ID товара: `{order.nmId}`\n";
-                            content += $"🏷 {order.brand} | [{order.supplierArticle}](https://www.wildberries.ru/catalog/{order.nmId}/detail.aspx)\n\n";
+                            content += $"🏷 {order.Brand} | [{order.supplierArticle}](https://www.wildberries.ru/catalog/{order.nmId}/detail.aspx)\n\n";
                             content += $"📁 {order.category} | {order.techSize}\n";
                             content += $"🌐 {order.warehouseName} → {order.oblast}\n";
                             if (!order.isCancel)
@@ -576,20 +588,29 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                             data.monthMessages++;
                             data.MessageRest();
 
-                            if(!c)
-                            data.dailyOrders.Add(order.odid);
+                            if (!c)
+                                data.dailyOrders.Add(order.odid);
 
-                            using (var fs = new FileStream($"{output}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
+                            if (File.Exists($"{output}{order.nmId}.jpeg"))
                             {
-                                
+                                using (var fs = new FileStream($"{output}{order.nmId}.jpeg", FileMode.Open, FileAccess.Read))
+                                {
+                                    foreach (long reciver in data.recivers)
+                                    {
+                                        fs.Seek(0, SeekOrigin.Begin);
+                                        InputOnlineFile file = new InputOnlineFile(fs);
+
+                                        await bot.SendMessage(reciver, content, file);
+                                    }
+                                    fs.Close();
+                                }
+                            }
+                            else
+                            {
                                 foreach (long reciver in data.recivers)
                                 {
-                                    fs.Seek(0, SeekOrigin.Begin);
-                                    InputOnlineFile file = new InputOnlineFile(fs);
-
-                                    await bot.SendMessage(reciver, content, file);
+                                    await bot.SendMessage(reciver, content);
                                 }
-                                fs.Close();
                             }
                         }
                     }
@@ -676,7 +697,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     {
                                         if (ord.isCancel)
                                             b++;
-                                        else {
+                                        else
+                                        {
                                             sm += ord.price;
                                             c++;
                                         }
@@ -703,7 +725,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                                     {
                                         if (ord.isCancel)
                                             b++;
-                                        else {
+                                        else
+                                        {
                                             sm += ord.price;
                                             c++;
                                         }
@@ -734,6 +757,31 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                 }
             }
         }
+
+        public static (string, InlineKeyboardMarkup?) ProductInfo(Bot bot, ClientData[]? client, object? arg){
+            long senderId = (long)arg;
+
+
+            bot.clientBook[senderId].messageCallback = SendProductInfo;
+
+            return ("🔎 Введите ID товара:", null);
+        }
+
+        public static async void SendProductInfo(Bot bot, ClientData[]? client, Message? message){
+            try{
+                int art = int.Parse(message?.Text?? throw new Exception("message null"));
+
+                int stockInfo = getItemDetail(art);
+                string name = await WbBaseManager.GetItemName(art);
+
+                await bot.SendMessage(message.Chat.Id, $"📘 Товар: {name}\n\n🆔 ID товара: `{art}`\n📦 Остаток: {stockInfo}\n\n⚠️ Данная функция была добавлена недавно и еще неоднократно получит обновление.");
+                bot.clientBook[message.Chat.Id].messageCallback = null;
+            }catch(Exception e){
+                await bot.SendMessage(message.Chat.Id, "❌ ID товара введен некорректно. Проверьте правильность написания и повторите попытку.");
+                Bot.ReciveError("Cannot Get product Info " + e.Message);
+            }
+        }
+
 
         public static (string, InlineKeyboardMarkup?) ClientDataOrders(Bot bot, ClientData[]? client, object? arg)
         {
@@ -813,7 +861,7 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     OrdersData.Order curOrd = handleClient.ordersData.orders[order[^1]];
                     content += $"*{curOrd.itemName}*\n";
                     content += $"🆔 ID товара: `{curOrd.nmId}`\n";
-                    content += $"🏷 {curOrd.brand} | [{curOrd.supplierArticle}](https://www.wildberries.ru/catalog/{curOrd.nmId}/detail.aspx)\n";
+                    content += $"🏷 {curOrd.Brand} | [{curOrd.supplierArticle}](https://www.wildberries.ru/catalog/{curOrd.nmId}/detail.aspx)\n";
                     content += $"📁 {curOrd.category} | {curOrd.techSize}\n";
                     content += $"🚛 Заказы: {ordCount}\n";
                     content += $"🚚 Возвраты: {backCount}\n";
@@ -852,7 +900,8 @@ public static string GetSalesData(Bot bot, ClientData[]? client)
                     buttons.Add(new InlineKeyboardButton[] { backButton });
 
                 return (content, buttons.Count > 0 ? buttons.ToArray() : null);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Bot.ReciveError(e.Message);
             }

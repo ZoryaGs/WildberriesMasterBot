@@ -88,7 +88,9 @@ namespace Wb_star_bot.Clients
             public int? incomeID;
             public ulong odid;
             public int nmId;
+
             public string brand;
+
             public string subject;
             public string category;
             public bool isCancel;
@@ -111,6 +113,9 @@ namespace Wb_star_bot.Clients
                     return task.Result;
                 }
             }
+
+            public string Brand => brand.Replace("_", "").Replace("*", "").Replace("`", "");
+
         }
     }
 }

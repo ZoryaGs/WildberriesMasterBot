@@ -155,12 +155,12 @@ namespace Wb_star_bot.Telegram_Bot
                         if (handleClient.SelectTarif(ClientData.subscibeType.simple))
                         {
                             bot.clientBook[senderId].queryCallback = null;
-                            return ($"✅ Тариф \"Стандарт\" успешно акутивирован на аккаунте \"{handleClient.Name}\"", null);
+                            return ($"✅ Тариф \"Стандарт\" успешно активирован на аккаунте \"{handleClient.Name}\"", null);
                         }
                     }
                     else
                     {
-                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
+                        return ($"⚠️ Тариф \"Стандарт\" уже активирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
                     }
                     break;
                 case "s2":
@@ -169,12 +169,12 @@ namespace Wb_star_bot.Telegram_Bot
                         if (handleClient.SelectTarif(ClientData.subscibeType.premium))
                         {
                             bot.clientBook[senderId].queryCallback = null;
-                            return ($"✅ Тариф \"Премиум\" успешно акутивирован на аккаунте \"{handleClient.Name}\"", null);
+                            return ($"✅ Тариф \"Премиум\" успешно активирован на аккаунте \"{handleClient.Name}\"", null);
                         }
                     }
                     else
                     {
-                        return ($"⚠️ Тариф \"Стандарт\" уже акутивирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
+                        return ($"⚠️ Тариф \"Стандарт\" уже активирован на аккаунте \"{handleClient.Name}\"", new InlineKeyboardButton("Назад") { CallbackData = $"/tarif back" });
                     }
                     break;
                 case "back":

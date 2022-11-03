@@ -10,6 +10,7 @@ namespace Wb_star_bot
 {
     internal static class Pages
     {
+        
         /*
         public static BotPage[] incomes = new BotPage[]{
         new BotPage(0, WbBaseManager.GetIncomeData,

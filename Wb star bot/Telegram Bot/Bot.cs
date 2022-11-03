@@ -399,7 +399,6 @@ namespace Wb_star_bot.Telegram_Bot
 
         public async Task AddNewClient(string message, long senderId)
         {
-
             if (clientDatas.ContainsKey(message))
             {
                 if (clientDatas[message].recivers.Contains(senderId))
@@ -752,3 +751,6 @@ namespace Wb_star_bot.Telegram_Bot
         unk_command = 128,
     }
 }
+
+
+
